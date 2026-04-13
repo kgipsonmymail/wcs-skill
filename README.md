@@ -22,12 +22,12 @@ WCS (Wind Code Standard) is a reusable skill for agent-driven software work. It 
 
 ## Docs
 
+- [Development plan](docs/dev_plan.md) - primary roadmap and delivery-status view
+- [Features](docs/features.md) - current implemented capability index
 - [Project status](docs/project_status.md)
 - [Structure](docs/structure.md)
-- [Development plan](docs/dev_plan.md)
 - [Development log](docs/dev_log.md)
 - [Error book](docs/error_book.md)
-- [Features](docs/features.md)
 - [Coding standards](docs/CODING_STANDARDS.md)
 - [Workflow](docs/workflow.md)
 - [Prompt constraints](docs/prompt.txt)

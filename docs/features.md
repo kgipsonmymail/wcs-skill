@@ -14,3 +14,4 @@
 - `done`: Packages the `wcs-cn` mirror as a sibling top-level directory
 - `done`: Provides public-facing installation and usage guidance
 - `done`: Publishes both language editions referenced by `SKILL.md`
+- `done`: Provides a dedicated roadmap document that distinguishes delivered and planned work

@@ -1,5 +1,22 @@
 # Development Log
 
+## 2026-04-13 - Planning-document maintenance
+
+### What changed
+
+- Reworked `docs/dev_plan.md` into a clearer roadmap board with `done`, `next`, `todo`, and `watch` states
+- Updated `README.md` and `docs/project_status.md` to point maintainers to the planning source of truth
+- Updated `docs/features.md` so the capability index reflects the improved roadmap visibility
+
+### Verification
+
+- Reviewed `README.md`, `docs/dev_plan.md`, `docs/project_status.md`, and `docs/features.md` for consistent terminology
+- Confirmed the repository still matches the WCS baseline document set
+
+### Rollback
+
+- Revert the latest documentation commit if the repository should return to the initial publication wording
+
 ## 2026-04-13 - Open-source packaging and publication
 
 ### What changed
