@@ -10,7 +10,7 @@
 
 ## Repository Capabilities
 
-- `done`: Packages the `wcs` skill as a standalone Git repository
-- `done`: Packages the `wcs-cn` mirror as a sibling directory in the same Git repository
+- `done`: Packages the English skill under `wcs/`
+- `done`: Packages the `wcs-cn` mirror as a sibling top-level directory
 - `done`: Provides public-facing installation and usage guidance
 - `done`: Publishes both language editions referenced by `SKILL.md`

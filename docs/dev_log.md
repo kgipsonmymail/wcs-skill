@@ -35,3 +35,21 @@
 ### Rollback
 
 - Remove `wcs-cn/` and revert the documentation update commit if the mirror should not be published
+
+## 2026-04-13 - Reorganize repository layout
+
+### What changed
+
+- Moved the English skill payload into `wcs/`
+- Kept `wcs-cn/` as a sibling directory so both language editions now have parallel top-level locations
+- Updated repository docs to point at `wcs/` and `wcs-cn/` instead of assuming the English edition lives at the repo root
+
+### Verification
+
+- Confirmed `wcs/` contains `SKILL.md`, `references/*.md`, `assets/.gitkeep`, and `scripts/.gitkeep`
+- Confirmed `wcs-cn/` remains intact after the reorganization
+- Confirmed repository-level docs reference the new paths
+
+### Rollback
+
+- Move the English payload back to the repository root and revert the documentation update commit if the split layout should be abandoned

@@ -4,16 +4,13 @@ WCS (Wind Code Standard) is a reusable skill for agent-driven software work. It 
 
 ## What It Includes
 
-- `SKILL.md`: the skill definition and operating contract
+- `wcs/`: the English skill definition and operating contract
 - `wcs-cn/`: the Simplified Chinese 1:1 mirror of the skill
-- `references/`: reusable templates and workflow checklists
-- `assets/`: reserved for future supporting assets
-- `scripts/`: reserved for future automation helpers
 - `docs/`: repository governance and maintenance records for this open-source package
 
 ## Quick Start
 
-1. Copy the repository root into your local Codex skills folder as `wcs`.
+1. Copy `wcs/` into your local Codex skills folder as `wcs`.
 2. If you want the Chinese mirror as well, copy `wcs-cn/` into the same parent skills directory.
 3. Trigger `wcs` or `wcs-cn` by name when starting, continuing, or reviewing work in a repository.
 4. Follow the generated gate, verification, document-sync, and handoff outputs.
@@ -21,7 +18,7 @@ WCS (Wind Code Standard) is a reusable skill for agent-driven software work. It 
 ## Repository Notes
 
 - This repository was published from the local `wcs` and `wcs-cn` skills found under `~/.codex/skills/`.
-- The repository root is the English `wcs` edition, and `wcs-cn/` contains the paired Simplified Chinese mirror.
+- The repository packages the English `wcs/` edition and the paired Simplified Chinese `wcs-cn/` mirror as sibling directories.
 
 ## Docs
 

@@ -9,12 +9,12 @@
 ## Pre-Development Gate
 
 - Read `docs/CODING_STANDARDS.md`
-- Review `SKILL.md` and relevant `references/`
+- Review `wcs/SKILL.md` and relevant `wcs/references/`
 - Define the packaging scope, verification steps, and documentation updates
 
 ## Implementation
 
-- Copy the source skill into a clean repository
+- Copy the source skills into clean `wcs/` and `wcs-cn/` package directories
 - Add missing baseline docs and publication metadata
 - Keep the repository faithful to the local skill contents
 

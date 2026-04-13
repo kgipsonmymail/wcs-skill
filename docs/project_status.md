@@ -4,9 +4,9 @@
 
 - Project: `wcs` open-source skill package
 - Type: Codex skill repository
-- Primary artifact: [`SKILL.md`](../SKILL.md)
+- Primary artifact: [`wcs/SKILL.md`](../wcs/SKILL.md)
 - Paired mirror: [`wcs-cn/SKILL.md`](../wcs-cn/SKILL.md)
-- Supporting references: [`references/`](../references)
+- Supporting references: [`wcs/references/`](../wcs/references) and [`wcs-cn/references/`](../wcs-cn/references)
 
 ## Current Capabilities
 
@@ -18,5 +18,5 @@
 
 ## Constraints
 
-- The repository root contains the English `wcs` edition, while `wcs-cn/` is stored as a sibling directory inside this Git repository
-- No runtime scripts are currently shipped beyond placeholder directories
+- The repository stores the English and Chinese editions as sibling directories: `wcs/` and `wcs-cn/`
+- Runtime scripts are currently limited to placeholder directories inside each skill package

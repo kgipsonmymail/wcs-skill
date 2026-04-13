@@ -2,7 +2,7 @@
 
 ## Must-Follow Rules
 
-1. Keep repository changes focused on the published `wcs` skill and its supporting docs.
+1. Keep repository changes focused on the published `wcs/` and `wcs-cn/` skill packages and their supporting docs.
 2. Record implementation and verification facts in `docs/dev_log.md`.
 3. Update affected docs after successful verification.
 4. Keep repository text concise and avoid duplicated guidance across files.
@@ -11,7 +11,7 @@
 ## Naming and Structure
 
 - Markdown and reference files use existing `kebab-case` or established filenames
-- The public repository preserves the local skill layout where possible
+- The public repository keeps the English and Chinese editions in sibling top-level directories
 - New supporting files should remain clearly separated from the canonical skill content
 
 ## Verification Policy
