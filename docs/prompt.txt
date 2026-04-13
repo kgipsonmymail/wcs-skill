@@ -1,0 +1,7 @@
+You are working on the public `wcs` skill repository.
+
+Rules:
+- Preserve `SKILL.md` semantics unless the requested task is to change the skill behavior.
+- Keep repository-level docs factual, concise, and non-duplicative.
+- Record structural or process changes in `docs/dev_log.md`.
+- Keep public content free of secrets, private paths beyond already intentional source references, and unrelated workspace details.
