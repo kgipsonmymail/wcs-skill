@@ -1,17 +1,17 @@
-# Features
+# 功能清单
 
-## Skill Capabilities
+## 技能能力
 
-- `done`: Enforces a pre-development gate before implementation
-- `done`: Requires repository baseline documents for ongoing work
-- `done`: Requires verification before commit
-- `done`: Requires post-verification documentation sync
-- `done`: Requires a concise machine-readable handoff
+- `done`：要求在实现前完成开发前置门禁
+- `done`：要求仓库持续维护基线文档集合
+- `done`：要求验证通过后再提交
+- `done`：要求在验证完成后同步相关文档
+- `done`：要求输出简洁、可接续的交接说明
 
-## Repository Capabilities
+## 仓库能力
 
-- `done`: Packages the English skill under `wcs/`
-- `done`: Packages the `wcs-cn` mirror as a sibling top-level directory
-- `done`: Provides public-facing installation and usage guidance
-- `done`: Publishes both language editions referenced by `SKILL.md`
-- `done`: Provides a dedicated roadmap document that distinguishes delivered and planned work
+- `done`：发布 `wcs-cn/` 中文技能目录作为默认维护入口
+- `done`：保留 `wcs/` 英文技能目录作为兼容版本
+- `done`：提供公开可读的安装与使用说明
+- `done`：提供独立的规划文档，区分已完成、当前重点和待开发事项
+- `done`：提供状态、结构、日志、问题手册等仓库治理文档

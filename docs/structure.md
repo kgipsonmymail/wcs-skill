@@ -1,24 +1,23 @@
-# Structure
+# 仓库结构
 
-## Top-Level Layout
+## 顶层目录
 
-- `wcs/`: English canonical skill package
-- `wcs-cn/`: Simplified Chinese 1:1 mirror of the skill
-- `README.md`: public entry point and installation guidance
-- `LICENSE`: open-source license
-- `docs/`: repository governance, status, and maintenance records
+- `wcs-cn/`：中文技能主目录，当前维护默认围绕这里展开
+- `wcs/`：英文技能目录，仓库保留但可忽略日常维护
+- `README.md`：仓库入口与使用说明
+- `LICENSE`：开源许可证
+- `docs/`：规划、状态、日志、流程和治理文档
 
-## Reference Files
+## 参考文件
 
-- `wcs/references/api_reference.md`: index for loading WCS references
-- `wcs/references/core_docs_template.md`: baseline doc-set template
-- `wcs/references/coding_standard_template.md`: portable coding standard template
-- `wcs/references/workflow_checklists.md`: end-to-end delivery checklists
+- `wcs-cn/references/api_reference.md`：WCS 引用资料入口
+- `wcs-cn/references/core_docs_template.md`：基线文档模板
+- `wcs-cn/references/coding_standard_template.md`：通用代码规范模板
+- `wcs-cn/references/workflow_checklists.md`：端到端流程清单
 
-## Maintainer Navigation
+## 维护导航
 
-- Change the English skill behavior in `wcs/SKILL.md`
-- Keep `wcs-cn/` structurally and semantically aligned when the English skill changes
-- Change reusable process guidance in both `wcs/references/` and `wcs-cn/references/` as needed
-- Record repository-level changes in `docs/dev_log.md`
-- Keep public positioning in `README.md`
+- 修改中文技能行为时，优先维护 `wcs-cn/SKILL.md`
+- 修改中文流程引用资料时，优先维护 `wcs-cn/references/`
+- 记录仓库级维护动作时，更新 `docs/dev_log.md`
+- 维护公开说明与导航时，更新 `README.md`

@@ -1,37 +1,36 @@
-# WCS Skill
+# WCS 技能仓库
 
-WCS (Wind Code Standard) is a reusable skill for agent-driven software work. It enforces a stable execution model across repositories by requiring core project docs, a pre-development gate, verification before commit, and a structured handoff after delivery.
+WCS（Wind Code Standard）是面向 AI 驱动开发的可复用流程技能。它通过核心文档基线、开发前置门禁、先验证后提交、结构化交接等要求，在不同仓库中统一协作方式。
 
-## What It Includes
+## 仓库内容
 
-- `wcs/`: the English skill definition and operating contract
-- `wcs-cn/`: the Simplified Chinese 1:1 mirror of the skill
-- `docs/`: repository governance and maintenance records for this open-source package
+- `wcs-cn/`：中文版技能定义与维护流程，当前默认使用这一套
+- `wcs/`：英文版技能目录，仓库保留但日常维护可忽略
+- `docs/`：本仓库的状态、规划、日志与维护说明
 
-## Quick Start
+## 使用方式
 
-1. Copy `wcs/` into your local Codex skills folder as `wcs`.
-2. If you want the Chinese mirror as well, copy `wcs-cn/` into the same parent skills directory.
-3. Trigger `wcs` or `wcs-cn` by name when starting, continuing, or reviewing work in a repository.
-4. Follow the generated gate, verification, document-sync, and handoff outputs.
+1. 将 `wcs-cn/` 复制到本地 Codex skills 目录，并保持目录名为 `wcs-cn`。
+2. 在开始新功能、修复缺陷、接手他人工作或做发布整理时，直接触发 `wcs-cn`。
+3. 按中文流程完成前置门禁、实现、验证、文档同步和交接。
 
-## Repository Notes
+## 说明
 
-- This repository was published from the local `wcs` and `wcs-cn` skills found under `~/.codex/skills/`.
-- The repository packages the English `wcs/` edition and the paired Simplified Chinese `wcs-cn/` mirror as sibling directories.
+- 本仓库由本地 `wcs` / `wcs-cn` 技能整理发布而来。
+- 目前文档维护默认以 `wcs-cn` 为主；英文版目录仅作为兼容保留。
 
-## Docs
+## 文档导航
 
-- [Development plan](docs/dev_plan.md) - primary roadmap and delivery-status view
-- [Features](docs/features.md) - current implemented capability index
-- [Project status](docs/project_status.md)
-- [Structure](docs/structure.md)
-- [Development log](docs/dev_log.md)
-- [Error book](docs/error_book.md)
-- [Coding standards](docs/CODING_STANDARDS.md)
-- [Workflow](docs/workflow.md)
-- [Prompt constraints](docs/prompt.txt)
+- [开发规划](docs/dev_plan.md) - 当前主规划面板，区分已完成、下一步和待开发
+- [功能清单](docs/features.md) - 已落地能力索引
+- [项目状态](docs/project_status.md)
+- [仓库结构](docs/structure.md)
+- [开发日志](docs/dev_log.md)
+- [问题手册](docs/error_book.md)
+- [代码规范](docs/CODING_STANDARDS.md)
+- [维护流程](docs/workflow.md)
+- [协作提示](docs/prompt.txt)
 
-## License
+## 许可证
 
 MIT

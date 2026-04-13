@@ -1,32 +1,32 @@
-# Coding Standards
+# 代码规范
 
-## Must-Follow Rules
+## 必须遵守
 
-1. Keep repository changes focused on the published `wcs/` and `wcs-cn/` skill packages and their supporting docs.
-2. Record implementation and verification facts in `docs/dev_log.md`.
-3. Update affected docs after successful verification.
-4. Keep repository text concise and avoid duplicated guidance across files.
-5. Do not publish sensitive local environment details.
+1. 仓库变更应聚焦已发布的 `wcs-cn/` 技能包及其配套文档；`wcs/` 仅做兼容保留。
+2. 实现与验证事实必须记录到 `docs/dev_log.md`。
+3. 验证通过后再同步受影响文档。
+4. 文档表达保持精炼，避免跨文件重复堆叠同一说明。
+5. 不公开敏感的本地环境信息、私密路径或凭据。
 
-## Naming and Structure
+## 命名与结构
 
-- Markdown and reference files use existing `kebab-case` or established filenames
-- The public repository keeps the English and Chinese editions in sibling top-level directories
-- New supporting files should remain clearly separated from the canonical skill content
+- Markdown 文件与引用文件沿用现有文件名，不做随意重命名
+- 仓库继续保留 `wcs/` 与 `wcs-cn/` 双目录结构，但维护视角以 `wcs-cn/` 为主
+- 新增辅助文件应与技能正文明确分离，不污染技能核心目录
 
-## Verification Policy
+## 验证要求
 
-- Validate that required files exist after structural changes
-- Validate public-facing docs and links after documentation changes
-- Do not create a release commit until the changed repository contents have been reviewed
+- 结构调整后要确认必备文件仍然齐全
+- 文档调整后要确认导航、链接与表述一致
+- 未完成内容复核前，不要创建发布型提交
 
-## Commit Policy
+## 提交要求
 
-- Use `<type>: <summary>`
-- Keep the initial publication commit scoped to repository packaging and docs
+- 提交信息格式使用 `<type>: <summary>`
+- 单次提交保持聚焦，可审阅、可回滚
 
-## Documentation Policy
+## 文档要求
 
-- Update `README.md` when installation or repository scope changes
-- Update `docs/project_status.md` and `docs/structure.md` when structure changes
-- Update `docs/features.md` when capabilities or packaged contents change
+- 安装方式、维护入口或仓库定位变化时更新 `README.md`
+- 结构变化时更新 `docs/project_status.md` 和 `docs/structure.md`
+- 能力范围或规划变化时更新 `docs/features.md` 与 `docs/dev_plan.md`

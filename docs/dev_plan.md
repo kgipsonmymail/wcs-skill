@@ -1,32 +1,33 @@
-# Development Plan
+# 开发规划
 
-## Source Of Truth
+## 规划说明
 
-Use this document as the primary roadmap board for the repository.
+本文件是仓库当前开发规划的主看板。
 
-- `done`: already packaged or documented in the repository
-- `next`: the most reasonable next delivery item
-- `todo`: planned but not started
-- `watch`: depends on upstream skill changes or future repository direction
+- `done`：已完成并已进入仓库
+- `next`：下一步优先处理
+- `todo`：已确认但尚未开始
+- `watch`：持续观察，等待上游或后续需求触发
 
-## Delivered
+## 已完成
 
-- `done`: Package the local `wcs` skill into a standalone public repository
-- `done`: Add the baseline WCS documentation set required by the skill itself
-- `done`: Prepare the repository for initial GitHub publication
-- `done`: Add the local `wcs-cn` mirror to the public repository
-- `done`: Reorganize the repository into sibling `wcs/` and `wcs-cn/` directories
-- `done`: Add clear doc navigation so maintainers can find status, features, and planning quickly
+- `done`：将本地 `wcs` 技能整理为独立公开仓库
+- `done`：补齐 WCS 要求的基线文档集合
+- `done`：完成首次 GitHub 发布准备
+- `done`：补充 `wcs-cn` 中文版镜像目录
+- `done`：将仓库整理为 `wcs/` 与 `wcs-cn/` 并行结构
+- `done`：补充清晰的文档导航，便于查看状态、功能和规划
+- `done`：将仓库级文档统一切换为中文，并默认采用 `wcs-cn` 维护流程
 
-## Current Focus
+## 当前重点
 
-- `next`: Keep the planning/status docs aligned with the published repository whenever either skill edition changes
+- `next`：后续每次技能内容变化后，同步更新中文规划、状态、功能和日志文档
 
-## Planned
+## 待开发
 
-- `todo`: Add concrete usage examples that show expected pre-development gate, verification, and handoff outputs
-- `todo`: Add lightweight automation helpers if the skill evolves beyond static references
+- `todo`：补充更具体的中文使用示例，展示前置门禁、验证和交接输出
+- `todo`：如技能演进到静态文档之外，补充轻量自动化辅助脚本
 
-## Watch Items
+## 观察项
 
-- `watch`: Re-check whether the local source skills start shipping new paired artifacts or scripts that should be mirrored into this repository
+- `watch`：关注本地 `wcs-cn` 是否新增需要同步到仓库的引用文件、脚本或配套资源

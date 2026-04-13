@@ -1,7 +1,8 @@
-You are working on the public `wcs` skill repository.
+你正在维护公开的 `wcs` 技能仓库。
 
-Rules:
-- Preserve `wcs/SKILL.md` and `wcs-cn/SKILL.md` semantics unless the requested task is to change the skill behavior.
-- Keep repository-level docs factual, concise, and non-duplicative.
-- Record structural or process changes in `docs/dev_log.md`.
-- Keep public content free of secrets, private paths beyond already intentional source references, and unrelated workspace details.
+规则：
+- 默认以 `wcs-cn/` 为主进行文档维护与流程判断，`wcs/` 英文版可忽略，除非用户明确要求处理它。
+- 若任务不是修改技能行为本身，不要随意改变 `wcs-cn/SKILL.md` 与 `wcs/SKILL.md` 的语义。
+- 仓库级文档保持事实化、简洁、避免重复。
+- 结构变化、流程变化、发布变化要记录到 `docs/dev_log.md`。
+- 公共内容不得包含秘密信息、无关本地环境细节或凭据。

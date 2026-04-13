@@ -1,31 +1,31 @@
-# Workflow
+# 维护流程
 
-## Intake
+## 受理
 
-- Confirm the repository is packaging the local `wcs` skill
-- Confirm whether paired artifacts such as `wcs-cn` are available
-- Confirm the target publication channel and visibility
+- 确认本次维护默认以 `wcs-cn/` 为主
+- 确认仓库文档、规划和状态是否与当前技能内容一致
+- 确认是否涉及发布、提交或远端同步
 
-## Pre-Development Gate
+## 开发前置门禁
 
-- Read `docs/CODING_STANDARDS.md`
-- Review `wcs/SKILL.md` and relevant `wcs/references/`
-- Define the packaging scope, verification steps, and documentation updates
+- 阅读 `docs/CODING_STANDARDS.md`
+- 阅读 `wcs-cn/SKILL.md` 及相关 `wcs-cn/references/`
+- 明确本次变更范围、验证方式和需要同步的文档
 
-## Implementation
+## 实施
 
-- Copy the source skills into clean `wcs/` and `wcs-cn/` package directories
-- Add missing baseline docs and publication metadata
-- Keep the repository faithful to the local skill contents
+- 优先维护 `wcs-cn/` 对应的中文说明和仓库级文档
+- 如无用户明确要求，不围绕 `wcs/` 英文版展开额外整理
+- 保持仓库描述与当前技能内容一致，不写脱离仓库事实的说明
 
-## Verification
+## 验证
 
-- Review the repository tree
-- Review key docs for consistency with the packaged contents
-- Verify the Git repository is ready for publication
+- 检查仓库结构和文档导航是否正常
+- 检查规划、状态、功能、日志之间的术语是否一致
+- 检查 Git 状态是否适合提交与推送
 
-## Handoff
+## 交接
 
-- Record what was published
-- Record what was verified
-- Record any gaps, especially missing paired editions or examples
+- 记录本次维护范围、修改结果和验证情况
+- 记录是否已提交、是否已推送
+- 记录后续待办与已知风险

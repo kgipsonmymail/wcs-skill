@@ -1,5 +1,6 @@
-# Error Book
+# 问题手册
 
-## Current Known Issues
+## 当前已知问题
 
-- No repository-level publication issues are currently recorded
+- 当前未记录仓库级发布问题
+- 若后续出现文档不一致、结构偏移或发布冲突，应在此补充根因、处理过程和最终结论
