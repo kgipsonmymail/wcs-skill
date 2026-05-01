@@ -31,10 +31,13 @@ If any item is missing, pause coding and complete the gap.
 
 - Run relevant test commands
 - Run lint/type/build checks relevant to changed scope
-- **Validate results against user requirements:**
-  - Software/website: check API endpoints, UI flows, or interface contracts
-  - Content: open/read actual files to confirm content correctness
+- **Validate results against user requirements (use appropriate tier):**
+  - **Software/website outputs** (high complexity):
+    - Tier 1 (preferred): Run and verify via backend API, frontend functionality, or UI
+    - Tier 2 (fallback if runtime unavailable): Inspect code, interface contracts, or configuration
+  - **Content outputs** (docs, copy, configs): Open/read actual files to confirm content correctness
 - Validate core user flow or API flow
+- If full verification is infeasible, perform highest available tier and document the limitation
 - Capture key evidence in `docs/dev_log.md`
 
 ## 5) Docs Sync Checklist (After Verification Passes)

@@ -32,13 +32,14 @@ Execute all rules below unless the user explicitly overrides them.
 
 1. Read project coding standards before writing code
 2. Run implementation only after requirements and constraints are clear
-3. **Verify all results against user requirements before reporting completion:**
-   - Software/website outputs: validate via API, frontend functionality, or UI checks; fall back to code/interface inspection if runtime unavailable
-   - Content outputs (docs, copy, configs): open and read the actual files to confirm content matches intent
+3. **Self-verify results against user requirements before reporting completion:**
+   - **Software/website outputs** (high complexity): validate via backend API checks, frontend functionality tests, or UI verification; if runtime is unavailable, fall back to inspecting code/interface contracts
+   - **Content outputs** (docs, copy, configs, etc.): open and read the actual files to confirm content matches user intent
+   - If full verification is infeasible, perform the highest available validation tier and document the limitation
 4. Commit only after functional verification succeeds
 5. Sync key docs after implementation and verification
-5. Keep docs non-duplicative by linking to source docs instead of copy-pasting
-6. Record issues and resolutions for future debugging and AI handoff
+6. Keep docs non-duplicative by linking to source docs instead of copy-pasting
+7. Record issues and resolutions for future debugging and AI handoff
 
 ## Required Documents Baseline
 
@@ -94,9 +95,9 @@ Stop implementation if this gate is not completed.
 - Verify affected user flow end-to-end
 - Confirm no blocker-level lint/type/build failures
 - **Self-verify results against user requirements before reporting completion:**
-  - For software/website outputs: validate via backend API checks, frontend functionality tests, or UI verification
+  - For software/website outputs (high complexity): validate via backend API checks, frontend functionality tests, or UI verification; if runtime unavailable, fall back to inspecting code/interface contracts
   - For content outputs (docs, copy, configs): open or read the relevant files to confirm actual content matches intent
-  - If full verification is infeasible (e.g., missing runtime), perform the highest available validation tier and document the limitation
+  - If full verification is infeasible, perform the highest available validation tier and document the limitation
 - Summarize verification evidence in `docs/dev_log.md`
 
 Do not commit when verification fails.

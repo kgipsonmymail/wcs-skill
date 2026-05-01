@@ -46,7 +46,10 @@ Before commit:
 
 - Pass relevant tests
 - Pass lint/type/build checks for changed scope
-- Validate affected business flow
+- **Validate results against user requirements:**
+  - Software/website outputs (high complexity): validate via API, UI, or code/interface inspection as fallback
+  - Content outputs: open/read actual files to confirm content correctness
+- If full verification is infeasible, perform highest available tier and document limitation
 
 If verification fails, fix first and do not commit.
 
