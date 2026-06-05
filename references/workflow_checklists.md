@@ -1,66 +1,74 @@
-# WCS Workflow Checklists
+# 工作流程检查清单
 
-Use these checklists as mandatory execution gates.
+本文件是 WCS 操作流程的强制执行门禁。每个阶段必须通过才能进入下一阶段。
 
-## 1) Intake Checklist
+## 阶段 0：受理与对齐
 
-- Confirm task type: `feature` / `bugfix` / `refactor` / `docs`
-- Confirm acceptance criteria
-- Confirm constraints (performance, security, compatibility, deadline)
-- Confirm affected modules/files
+在开始任何实现之前：
 
-## 2) Pre-Development Gate (Must Pass Before Coding)
+- [ ] 确认任务类型：`feature` / `bugfix` / `refactor` / `docs`
+- [ ] 确认验收标准（用户想要什么结果）
+- [ ] 确认约束条件（性能、安全、兼容性、截止时间）
+- [ ] 确认影响范围（改哪些文件/模块）
+- [ ] 定位既有规范文档（优先 `docs/CODING_STANDARDS.md`）
+- [ ] 发现缺失的基线文档并补全骨架
 
-- Read `docs/CODING_STANDARDS.md` (or equivalent standard file)
-- Read project workflow and current status docs
-- Write brief implementation plan
-- Define verification strategy and commands
-- Identify required docs to update after delivery
+## 阶段 1：开发前置门禁（强制，未通过不写代码）
 
-If any item is missing, pause coding and complete the gap.
+- [ ] 阅读代码规范与工作流文档
+- [ ] 制定与验收标准绑定的实现计划
+- [ ] 制定验证计划（单元/手工/集成等，视情况而定）
+- [ ] 识别将变更的文件与模块
+- [ ] 对高风险变更准备回滚策略
 
-## 3) Implementation Checklist
+**门禁未通过时，停止实现。**
 
-- Keep change scoped to the task
-- Follow naming and module responsibility conventions
-- Externalize config; avoid hardcoded sensitive values
-- Add/update tests when feasible
-- Keep backward compatibility unless requirements say otherwise
+## 阶段 2：实现
 
-## 4) Verification Checklist
+- [ ] 保持变更范围聚焦，不做无关重构
+- [ ] 遵循命名与模块职责约定
+- [ ] 外置配置，不硬编码敏感值
+- [ ] 变更相关测试已补充或更新
+- [ ] 保持向后兼容，除非需求明确说明
 
-- Run relevant test commands
-- Run lint/type/build checks relevant to changed scope
-- **Validate results against user requirements (use appropriate tier):**
-  - **Software/website outputs** (high complexity):
-    - Tier 1 (preferred): Run and verify via backend API, frontend functionality, or UI
-    - Tier 2 (fallback if runtime unavailable): Inspect code, interface contracts, or configuration
-  - **Content outputs** (docs, copy, configs): Open/read actual files to confirm content correctness
-- Validate core user flow or API flow
-- If full verification is infeasible, perform highest available tier and document the limitation
-- Capture key evidence in `docs/dev_log.md`
+## 阶段 3：提交前验证
 
-## 5) Docs Sync Checklist (After Verification Passes)
+- [ ] 对变更范围运行所需测试/检查
+- [ ] 端到端验证受影响的用户流程
+- [ ] 确认无阻塞级 lint/类型/构建失败
+- [ ] **结果验证**：对照需求验证实际输出
+  - 软件/网站：优先跑 API/前端功能验证
+  - 内容输出：读取实际文件确认内容正确
+- [ ] 在 `docs/dev_log.md` 中汇总验证依据
 
-- Update `docs/dev_log.md`
-- Update `docs/error_book.md` for bug or incident tasks
-- Update `docs/features.md` for capability changes
-- Update `docs/project_status.md` for behavior/architecture impact
-- Update `docs/dev_plan.md` progress and next steps
-- Update `README.md` index or usage notes if user-facing behavior changed
-- Update `docs/structure.md` if directory/module structure changed
+**验证未通过时不提交。**
 
-## 6) Commit Checklist
+## 阶段 4：文档同步（验证通过后立即执行）
 
-- Ensure verification passed
-- Ensure required docs updated
-- Use commit message format: `<type>: <summary>`
-- Keep commit focused and reviewable
+- [ ] 更新 `docs/dev_log.md`
+- [ ] 更新 `docs/error_book.md`（仅缺陷或事故类任务）
+- [ ] 更新 `docs/features.md`（仅能力变更）
+- [ ] 更新 `docs/project_status.md`（仅行为/架构影响）
+- [ ] 更新 `docs/dev_plan.md`
+- [ ] 更新 `README.md`（仅用户可见行为变化）
+- [ ] 更新 `docs/structure.md`（仅文件/模块结构变化）
 
-## 7) Handoff Checklist (For Multi-AI Collaboration)
+## 阶段 5：提交
 
-- State objective and completion status
-- List changed files
-- List verification results and remaining risks
-- List pending tasks and recommended next action
-- Record assumptions and unresolved questions
+- [ ] 确认验证已通过
+- [ ] 确认所需文档已更新
+- [ ] 使用格式：`<type>: <摘要>`
+- [ ] 提交聚焦、可审阅、可回滚
+
+## 阶段 6：交接（多 AI 协作时）
+
+产出简洁交接块：
+
+- [ ] 任务范围与结果
+- [ ] 变更文件列表
+- [ ] 已执行的验证
+- [ ] 已知限制或风险
+- [ ] 建议的后续动作
+- [ ] 假设条件和未解决的问题
+
+交接内容应可被机器解析，其他 AI 无需隐藏上下文即可接续。

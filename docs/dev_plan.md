@@ -123,11 +123,16 @@
 
 ## 当前重点
 
-- `next`：七大模块全部完成（2026-06-05），进入下一迭代周期
+- `next`：整理 Git 版本 vs 部署版本分离方案（讨论中）
+- `next`：重建 CODING_STANDARDS.md、references/ 文档中文化、prompt.txt 重建
+- `next`：评估 codegraph、context-model、rtk 等文件感知方案
+- `next`：优化 WCS 三层架构（中枢——docs——全文件）
 
 ## 待开发
 
-- `todo`：Module 8（待定义）——根据下一阶段实践定义
+- `todo`：Module 8（待定义）——基于三层架构优化的下一阶段
+- `todo`：部署版 wcs-cn 的目录结构确认（Git 版本 vs 部署版本分离方案落地）
+- `todo`：prompt.txt 释放机制落地（用户输入缓存 → 归档流程）
 
 ## 观察项
 

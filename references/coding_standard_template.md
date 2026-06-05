@@ -1,72 +1,69 @@
-# Portable Coding Standard Template
+# 代码规范模板
 
-Use this template as a starting point for `docs/CODING_STANDARDS.md` in a new project.
+本文件是新建项目 `docs/CODING_STANDARDS.md` 的起点，也是已有项目的规范参照。
 
-## 1. Must-Follow Rules
+## 必须遵守
 
-1. Commit only after verification passes
-2. Record implementation and verification in `docs/dev_log.md`
-3. Record bug root cause and fix in `docs/error_book.md`
-4. Update impacted project docs after successful verification
-5. Keep docs concise, linked, and non-duplicative
+1. **验证在前，提交在后**：未通过验证不提交。
+2. **事实记录**：`docs/dev_log.md` 记录实现与验证的事实，不写流水账。
+3. **错误留档**：缺陷根因、失败尝试、最终修复写入 `docs/error_book.md`。
+4. **文档同步**：验证通过后立即更新受影响文档，不遗漏。
+5. **最小变更**：diff 聚焦，避免无关重构。
 
-## 2. Development Principles
+## 开发原则
 
-- Implement correctness first, then optimize
-- Keep modules/functions single-responsibility
-- Prefer explicit naming and clear boundaries
-- Externalize environment/configuration values
+- 先实现最小正确解，再优化性能
+- 保持模块/函数单一职责
+- 命名清晰、边界明确
+- 环境/配置值外置，不硬编码
+- 向后兼容，除非需求明确要求破坏性变更
 
-## 3. Naming Conventions
+## 命名约定
 
-- Files/modules: project convention (`snake_case` or `kebab-case`)
-- Functions/methods: language convention
-- Classes/types: language convention
-- Constants: uppercase snake case (if language commonly uses it)
+- 文件/模块：项目惯例（蛇形或 kebab-case）
+- 函数/方法：语言惯例
+- 类/类型：语言惯例
+- 常量：大写蛇形（若语言常用）
 
-Document language-specific exceptions if needed.
+## 提交约定
 
-## 4. Commit Convention
+格式：`<type>: <摘要>`
 
-Format:
+type 类型：
+- `feat`：新功能
+- `fix`：缺陷修复
+- `refactor`：不影响行为的结构优化
+- `docs`：文档更新
+- `chore`：维护类任务
 
-`<type>: <summary>`
+## 验证策略
 
-Types:
+提交前必须验证：
 
-- `feat`: new capability
-- `fix`: bug fix
-- `refactor`: structural improvement without behavior change
-- `docs`: documentation update
-- `chore`: maintenance task
+1. **测试**：相关测试通过（无测试时做等价的手工验证）
+2. **检查**：lint、类型检查、构建检查（按变更范围）
+3. **结果验证**：对照用户需求验证输出
+   - 软件/网站（高复杂度）：优先跑 API/前端功能验证，降级方案为代码审查
+   - 内容输出（文档、配置）：读取实际文件确认内容正确
+4. **核心流程**：端到端走一遍受影响用户流程
 
-## 5. Verification Policy
+验证失败时，先修问题，不提交。
 
-Before commit:
+## 文档同步时机
 
-- Pass relevant tests
-- Pass lint/type/build checks for changed scope
-- **Validate results against user requirements:**
-  - Software/website outputs (high complexity): validate via API, UI, or code/interface inspection as fallback
-  - Content outputs: open/read actual files to confirm content correctness
-- If full verification is infeasible, perform highest available tier and document limitation
+验证通过后立即更新：
 
-If verification fails, fix first and do not commit.
+- `docs/dev_log.md`：变更内容、遇到的问题、验证方式
+- `docs/error_book.md`：根因、失败尝试、最终修复（仅缺陷类任务）
+- `docs/features.md`：新增或更新的能力条目
+- `docs/project_status.md`：新行为与使用影响
+- `docs/dev_plan.md`：标记完成项，细化待办
+- `README.md`：用户可见行为变化时更新快速上手/文档索引
+- `docs/structure.md`：仅当文件/模块结构变化时
 
-## 6. Documentation Sync Policy
+## 协作与交接
 
-After verification passes, update:
-
-- `docs/dev_log.md`
-- `docs/error_book.md` (if applicable)
-- `docs/features.md` (if capability changed)
-- `docs/project_status.md` (if behavior/architecture changed)
-- `docs/dev_plan.md` (progress and pending tasks)
-- `README.md` and `docs/structure.md` when required
-
-## 7. Collaboration and Handoff Policy
-
-- Keep records factual and concise
-- List assumptions explicitly
-- Provide next actionable steps
-- Ensure another AI/engineer can continue without hidden context
+- 记录保持事实性和简洁性
+- 假设条件明确列出
+- 提供下一步可执行的动作
+- 确保其他 AI 或工程师无需隐藏上下文即可接续

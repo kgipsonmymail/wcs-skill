@@ -1,18 +1,18 @@
 # WCS References Index
 
-This file is a pointer index for WCS references.
+本文件是 WCS 引用文件的索引指针。
 
-## Files
+## 文件说明
 
-- `core_docs_template.md`: Baseline doc set, required sections, and writing granularity guidance
-- `workflow_checklists.md`: Operational checklist from task intake to handoff
-- `coding_standard_template.md`: Portable coding standard template for new projects
+- `core_docs_template.md`：基线文档模板，必备章节和写作粒度指南
+- `workflow_checklists.md`：从任务受理到交接的强制执行门禁清单
+- `coding_standard_template.md`：新建项目代码规范的可复用模板
 
-## Loading Guidance
+## 加载指引
 
-Load files selectively based on task type:
+按任务类型选择性加载：
 
-- New project setup: load all three files
-- Feature implementation: load `workflow_checklists.md` and project coding standards
-- Bug fixing: load `workflow_checklists.md` and update `error_book` sections
-- Process governance update: load `core_docs_template.md` and `coding_standard_template.md`
+- 新项目初始化：加载全部三个文件
+- 功能实现：加载 `workflow_checklists.md` + 项目代码规范
+- 缺陷修复：加载 `workflow_checklists.md` + 更新 `error_book.md`
+- 流程规范更新：加载 `core_docs_template.md` + `coding_standard_template.md`
