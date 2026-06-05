@@ -1,63 +1,65 @@
 # Git 版本与部署版本的分离
 
-## 问题背景
+## 已确认的决策
 
-WCS 以 skill 形式存在，但 skill 本身也有"开发迭代"和"实际使用"两个生命周期。以往我们在同一套文件中混合了两种目的，导致：
+### 版本定义
 
-- 维护 WCS 自身时不知道该改哪里
-- 本地测试时不知道用的是哪个版本
-- 开发版的文档污染了部署版
+- **Git 版本**（`~/.hermes/skills/wcs-skill/`）：管理 WCS 自身的迭代和演进。包含 `docs/`、`wcs-cn/` 源码、`scripts/`、`references/`。
 
-## 两个版本的定义
+- **部署版本**（`wcs-cn/SKILL.md`）：AI 实际执行任务时加载的 skill。**不包含 `docs/`**，只包含 `SKILL.md` 和 `references/`。
 
-### Git 版本（wcs-skill 仓库）
+### prompt.txt 的位置
 
-- **位置**：`~/.hermes/skills/wcs-skill/`（即 Git 工作目录）
-- **目的**：管理 WCS 自身的迭代和演进
-- **用户**：正在开发 WCS 的 AI 或工程师
-- **核心内容**：
-  - `docs/`：讨论、规划、日志、实验记录
-  - `wcs-cn/`：skill 源码（待发布的部署版 skill 内容）
-  - `scripts/`：辅助脚本
-  - `references/`：模板和索引文件
+`docs/prompt.txt` 存在于两个地方：
 
-### 部署版本（安装到 Hermes 的实际 skill）
+1. **Git 版本的** `docs/prompt.txt`：`~/.hermes/skills/wcs-skill/docs/prompt.txt`（WCS 自身维护用）
+2. **用户开发项目中的** `docs/prompt.txt`：AI 在每个项目 `docs/` 下维护（AI 实际使用时读）
 
-- **位置**：由 Hermes 平台决定，例如 `~/.hermes/skills/wcs-cn/` 或通过 symlink 指向 Git 版本的 `wcs-cn/`
-- **目的**：被 AI 在日常开发任务中执行使用
-- **用户**：执行开发任务的 AI
-- **核心内容**：`wcs-cn/SKILL.md` 和必要的 `references/*.md`
+### 部署版结构（wcs-cn/）
 
-## 关键区别
+```
+wcs-cn/
+├── SKILL.md              # 部署版入口
+└── references/           # 模板文件（从 Git 版本复制）
+    ├── core_docs_template.md
+    ├── workflow_checklists.md
+    ├── coding_standard_template.md
+    └── project_index_template.yaml
+```
 
-| 维度 | Git 版本 | 部署版本 |
-|------|----------|----------|
-| 受众 | 开发 WCS 的 AI | 执行任务的 AI |
-| 包含讨论/规划文档 | 是 | 否 |
-| 包含开发实验 | 是 | 否 |
-| 包含 wcs-cn SKILL.md | 是（源码） | 是（symlink 或 copy） |
-| 包含 prompt.txt（用户输入缓存） | 否 | 是 |
-| 包含 error_book.md | 否（用 dev_log 代替） | 是 |
+### Git 版本结构（wcs-skill/）
 
-## 待讨论
+```
+wcs-skill/
+├── wcs-cn/               # 部署版源码（上游）
+│   ├── SKILL.md
+│   └── references/
+├── docs/                 # WCS 自身维护用的文档
+│   ├── prompt.txt       # 用户输入缓存（WCS 自用）
+│   ├── error_book.md    # WCS 自身的问题记录
+│   ├── project_index.yaml
+│   ├── task_states.md
+│   ├── dev_log.md
+│   ├── dev_plan.md
+│   ├── discussions/      # 重构讨论存档
+│   └── ...其他文档
+├── scripts/
+├── references/           # 模板文件源
+└── SKILL.md             # Git 版本入口（name: wcs）
+```
 
-1. **部署版的 `docs/` 应该放什么？**
-   - 方案 A：部署版 `wcs-cn/` 下不包含 `docs/` 目录，只通过 symlink 引用 Git 版本的 docs
-   - 方案 B：部署版有自己独立的 `docs/` 目录（只包含 `project_status.md`、`prompt.txt`、`error_book.md` 等实际执行时需要的文档）
-   - 方案 C：完全不做目录分离，Git 版本即部署版本（当前状态）
+### Git 版本 docs/ 的定位
 
-2. **Git 版本的 docs/ 哪些内容属于部署版？**
-   - `prompt.txt`：属于部署版，不应进入 git
-   - `error_book.md`：属于部署版
-   - `project_status.md`、`dev_log.md`、`dev_plan.md`：取决于项目是谁的项目——如果是 WCS 自身维护，则是 Git 版；如果是 AI 使用 WCS 时面对的具体项目，则是部署版
+Git 版本的 `docs/` 是 WCS **自身**维护用的文档，和 AI 在**用户项目**中维护的 `docs/` 是同一个概念——即 WCS 自身作为一个"项目"，用 WCS 管理自己。
 
-3. **本地测试流程**
-   - 修改 Git 版本（wcs-skill/）中的 `wcs-cn/SKILL.md` 后，如何同步到本地部署的 skill？
-   - 是否需要一个安装脚本？
+### 部署版的 references/ 同步
 
-4. **当前状态确认**
-   - `docs/prompt.txt`：目前放在 Git 版本中，但内容是"用户输入缓存"，应属于部署版
+部署版 `wcs-cn/references/` 应该与 Git 版本的 `wcs-cn/references/` 保持一致。更新流程：
+1. 修改 Git 版本的 `wcs-cn/references/`
+2. 部署时同步到各设备的 `wcs-cn/references/`
 
-## 讨论时间
+## 待确认
 
-待与用户进一步讨论后决定。
+1. **部署版 references/ 的同步机制**：手动复制、symlink 还是安装脚本？
+2. **Git 版本根目录的 SKILL.md**：`wcs-skill/SKILL.md`（name: wcs）是否还有存在必要？还是说只用 `wcs-cn/SKILL.md`（name: wcs-cn）就够了？
+3. **error_book.md 的位置**：WCS 自身的问题记录放在 Git 版本的 `docs/` 中，这个决策已确认。
