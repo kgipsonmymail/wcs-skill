@@ -14,7 +14,7 @@
 #### docs/ 文档质量提升
 
 - `docs/CODING_STANDARDS.md`：重写，删除 `wcs/` 英文版引用，质量对齐原版原型
-- `docs/prompt.txt`：完全重建，加入释放机制：
+- `docs/uin.md`：完全重建，加入释放机制：
   - 规则1：已完成开发任务 → 检查 dev_log/dev_plan 有无记录，补写后删除
   - 规则2：未完成开发任务 → 提问用户是否继续
   - 规则3：用户见解/方法论 → 归档到 `docs/discussions/user_insights.md`
@@ -30,7 +30,7 @@
 
 - `git push` 成功（commit `4edd956`）
 - references/ 所有文件已中文化
-- prompt.txt 释放机制已写入文件头部
+- uin.md 释放机制已写入文件头部
 
 ### 回滚方式
 
@@ -42,9 +42,9 @@
 #### 确认内容
 
 - **部署版**（`wcs-cn/`）**无 `docs/`**，只包含 `SKILL.md` + `references/`
-- **prompt.txt** 存在于两个位置：
-  1. Git 版本的 `docs/prompt.txt`（WCS 自用）
-  2. 用户开发项目中的 `docs/prompt.txt`（AI 实际使用时读）
+- **uin.md** 存在于两个位置：
+  1. Git 版本的 `docs/uin.md`（WCS 自用）
+  2. 用户开发项目中的 `docs/uin.md`（AI 实际使用时读）
 - Git 版本 `wcs-cn/SKILL.md` 更新说明，明确部署版结构
 - `docs/discussions/2026-06-06-git-vs-deploy-version.md` 同步更新，整理为"已确认"+"待确认"两部分
 

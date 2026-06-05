@@ -37,7 +37,7 @@ wcs-skill/                ← git 仓库根目录
 - [问题手册](docs/error_book.md)
 - [代码规范](docs/CODING_STANDARDS.md)
 - [维护流程](docs/workflow.md)
-- [协作提示](docs/prompt.txt)
+- [用户输入记录](docs/uin.md)
 - [重构讨论](docs/discussions/)
 
 ## 许可证

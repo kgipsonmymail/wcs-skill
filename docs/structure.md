@@ -29,7 +29,7 @@ wcs-skill/
 │   ├── error_book.md
 │   ├── CODING_STANDARDS.md
 │   ├── workflow.md
-│   └── prompt.txt
+│   └── uin.md
 ├── references/           # WCS 模板
 │   ├── core_docs_template.md
 │   ├── workflow_checklists.md

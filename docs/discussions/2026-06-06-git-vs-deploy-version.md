@@ -29,10 +29,11 @@ wcs-skill/                ← git 仓库根目录 = 部署版根目录
 - 本地特有的数据（如 skill 管理信息）放到 `~/.hermes/` 下被 gitignore 的目录中
 - 不上传 GitHub，保护隐私
 
-### prompt.txt 的位置
+### uin.md 的位置
 
-- 用户开发项目的 `docs/prompt.txt`（AI 实际使用时读）
-- 不放在 `wcs-cn/` 中（`wcs-cn/` 不含 `docs/`）
+- `wcs-skill/docs/uin.md`：用户参与 wcs-skill 自身优化时的 input 记录
+- 用户开发项目的 `docs/uin.md`：wcs-cn 在那个项目被使用时，用户在该项目的 input 记录
+- 两者的释放规则相同（30 条阈值触发）
 
 ### references/ 的位置
 

@@ -236,7 +236,7 @@ wcs-skill/
 │   ├── error_book.md
 │   ├── CODING_STANDARDS.md
 │   ├── workflow.md
-│   ├── prompt.txt
+│   ├── uin.md
 │   └── discussions/          # ✅ 讨论存档
 │       └── 2026-06-05-three-tier-docs-architecture.md
 └── references/           # 模板
