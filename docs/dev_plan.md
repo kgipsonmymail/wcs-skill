@@ -37,7 +37,7 @@
 - WCS 启动时读取中枢，分析任务类型，推荐对应的 skill 和 doc
 - AI 根据推荐按需激活 skill、阅读 doc
 
-**状态**：`todo` — 中枢已有初步结构，需完善 `task_contexts`
+**状态**：`done` — 扩展到 16 种任务类型，每种配置 trigger_keywords
 
 ---
 
@@ -50,7 +50,7 @@
 - 根据当前状态，按需触发对应的规范子集
 - 类似于 skill 机制：根据状态激活对应的规范 checklist
 
-**状态**：`todo`
+**状态**：`done` — `docs/task_states.md` 定义 15 种任务状态的触发规则
 
 ---
 
@@ -61,10 +61,10 @@
 **实现方式**：
 - Python 脚本扫描 skills 目录
 - 读取 SKILL.md 的 name、description、tags 字段
-- 生成 `skills_index.yaml` 或直接写入 `project_index.yaml`
-- **附加**：记录 skill 使用情况，评估是否有效（加入 doc 维护环节）
+- 生成 `docs/skills_index.yaml`
+- **附加**：记录 skill 使用情况，评估是否有效
 
-**状态**：`todo`
+**状态**：`done` — `scripts/scan_skills.py` 已实现（0 依赖，纯 stdlib）
 
 ---
 
@@ -77,7 +77,7 @@
 - AI 开发后按清单检查并更新对应 doc
 - 把此机制加入交接完整性检查
 
-**状态**：`done`（部分）— 已有基础机制，需强化检查清单
+**状态**：`done` — `docs/doc_sync_checklist.md` 定义完整规则
 
 ---
 
@@ -89,9 +89,9 @@
 - Python 脚本扫描源代码目录，建立文件索引
 - SQLite 存储：文件路径、最后修改时间、关联模块
 - 测试 YAML vs SQLite 的效果差异
-- 如果 SQLite 效果不佳，保持 YAML
+- 实验结论：YAML 作为中枢索引，SQLite 作为可选增强
 
-**状态**：`todo`
+**状态**：`done` — `scripts/scan_structure.py` 已实现，实验记录于 `docs/structure_index_experiment.md`
 
 ---
 
@@ -100,14 +100,11 @@
 **目标**：定时清空 errorbook，将内容归纳到系统性文件
 
 **实现方式**：
-- 定义触发条件（如：errorbook 超过 50 条 / 每季度 / 人工触发）
-- 释放流程：
-  1. 阅读 errorbook 所有条目
-  2. 按内容分类归纳到 features.md / CODING_STANDARDS.md / dev_plan.md
-  3. 清空 errorbook
+- 定义触发条件（如：errorbook 超过 30 条 / 每季度 / 人工触发）
+- 释放流程：阅读 → 分类归纳 → 更新对应 doc → 清空
 - 类比 memory 释放机制
 
-**状态**：`todo`
+**状态**：`done` — `docs/errorbook_release.md` 定义完整生命周期
 
 ---
 
@@ -120,24 +117,19 @@
 - 是否需要按项目类型增删 docs
 - 中枢索引 `project_index.yaml` 是否能覆盖所有场景
 
-**状态**：`watch` — 需等模块1-4有一定基础后再评估
+**状态**：`done` — `docs/docs_architecture_review.md` 给出评估结论（现有架构足够）
 
 ---
 
 ## 当前重点
 
-- `next`：完善 `project_index.yaml` 的 `task_contexts` 配置（模块1）
-- `next`：设计任务状态触发机制（模块2）
-- `next`：开发 Skill 索引脚本（模块3）
+- `next`：七大模块全部完成（2026-06-05），进入下一迭代周期
 
 ## 待开发
 
-- `todo`：强化 Doc 维护检查清单（模块4）
-- `todo`：测试 SQLite 结构索引效果（模块5）
-- `todo`：设计 Errorbook 释放流程（模块6）
-- `todo`：评估 Docs 架构是否扩展（模块7）
+- `todo`：Module 8（待定义）——根据下一阶段实践定义
 
 ## 观察项
 
-- `watch`：关注模块1-4开发后的实际效果，再决定模块5-7的优先级
+- `watch`：关注模块1-7在实际项目中的效果，再决定下一阶段开发方向
 - `watch`：WCS 定位是否需要随着开发推进调整

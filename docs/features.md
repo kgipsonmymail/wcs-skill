@@ -18,3 +18,10 @@
 - `done`：提供独立的规划文档，区分已完成、当前重点和待开发事项
 - `done`：提供状态、结构、日志、问题手册等仓库治理文档
 - `done`：提供重构讨论存档（`docs/discussions/`）
+- `done`：**Module 1（task_contexts）**：扩展到 16 种任务类型，增加 trigger_keywords（2026-06-05）
+- `done`：**Module 2（task_states）**：`docs/task_states.md` 定义 15 种任务状态的触发规则（2026-06-05）
+- `done`：**Module 3（Skill 索引）**：`scripts/scan_skills.py` 自动扫描本地 skills 生成索引（2026-06-05）
+- `done`：**Module 4（Doc 同步）**：`docs/doc_sync_checklist.md` 强化同步规则（2026-06-05）
+- `done`：**Module 5（SQLite 索引）**：`scripts/scan_structure.py` + 实验结论文档（2026-06-05）
+- `done`：**Module 6（Errorbook 释放）**：`docs/errorbook_release.md` 定义生命周期（2026-06-05）
+- `done`：**Module 7（Docs 架构评估）**：`docs/docs_architecture_review.md` 给出评估结论（2026-06-05）
