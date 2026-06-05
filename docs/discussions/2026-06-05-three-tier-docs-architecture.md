@@ -1,7 +1,64 @@
-# 三层文档管理架构讨论
+# WCS 重构讨论
 
 > 创建时间：2026-06-05
-> 讨论背景：codegraph/context-model/RTK 插件研究 + WCS 框架优化
+> 状态：**重构中** — 从目标与定位出发逐步展开
+
+---
+
+## 核心锚点：WCS 的目标与定位
+
+### 定位
+
+> **统领，不执行**
+
+- WCS **不是**执行开发的 skill
+- WCS **是**开发任务的**统领**：启动任何开发任务时第一个使用
+- 它帮助 AI 找到合适的 skill/doc/file，然后让相应的 skill 去执行
+
+### 核心目标
+
+> **通过架构设计协助 AI，最节省 token 和上下文长度（精准），发挥 AI 最大能力，最快解决开发任务**
+
+### 三层上下文维度
+
+```
+skill（技能层）  →  doc（文档层）  →  file（文件层）
+     ↑                ↑                ↑
+  工具能力          项目知识          源代码
+  按需激活          按需阅读          按需定位
+```
+
+**WCS 负责精准调度这三层上下文。**
+
+### WCS 强制的能力
+
+| 能力 | 目的 | 保证 |
+|------|------|------|
+| **代码规范执行** | 良好代码质量 | 强制 AI 执行 |
+| **项目迭代保证** | 与项目保持内容一致性 | 强制 docs 更新 |
+| **交接保证** | 上一轮和下一轮开发能安全交接 | git备份 + 文档 + 目录结构 |
+
+---
+
+## 重构展开计划
+
+### 第一阶段：基础架构（必须先完成）
+
+- [x] **删除英文版 wcs/** — 只保留中文版
+- [x] **建立 YAML 中枢** — `docs/project_index.yaml` ✅
+- [ ] **设计三层架构** — 中枢 → docs → 全文件
+- [ ] **更新 SKILL.md** — 写入"统领"定位
+
+### 第二阶段：核心能力
+
+- [ ] **Skill 管理机制** — 扫描本地 skills，按需激活
+- [ ] **Docs 按需索引** — 不用每次读全部 docs
+- [ ] **Errorbook 释放机制** — 定时归纳清空
+
+### 第三阶段：进阶能力
+
+- [ ] **WCS 自我迭代** — 从项目经验中提炼规则
+- [ ] **SQLite 增强 structure.md** — 快速文件定位
 
 ---
 
@@ -97,100 +154,51 @@
 
 ---
 
-## 四、提案：YAML 中枢 + docs 按需索引
+## 四、YAML 中枢设计（已实现）
 
-### 4.1 中枢文档设计（YAML）
+### 4.1 中枢文件位置
 
-```yaml
-# project_index.yaml
-project:
-  name: mediary
-  type: go-frontend分离架构
-  tech_stack:
-    backend: Go + Gin
-    frontend: React + Vite
-    database: MySQL 8.0
-    
-docs:
-  # 全局导航（必读）
-  - path: docs/project_status.md
-    purpose: 项目状态总览
-    read_when: [onboarding, architecture_change]
-    
-  - path: docs/structure.md
-    purpose: 目录结构映射
-    read_when: [onboarding, new_module]
-    
-  # 模块级文档（按需）
-  - path: docs/backend/api.md
-    purpose: 后端 API 结构
-    tags: [backend, api]
-    read_when: [backend_change, api_integration]
-    
-  - path: docs/frontend/components.md
-    purpose: 前端组件结构
-    tags: [frontend, component]
-    read_when: [frontend_change, ui_feature]
-
-  - path: docs/database/schema.md
-    purpose: 数据库 schema
-    tags: [database, schema]
-    read_when: [database_change, migration]
-
-# 任务类型 → 文档推荐映射
-task_contexts:
-  bug_fix:
-    priority_docs:
-      - docs/error_book.md
-      - docs/dev_log.md
-    tags: [debug, backend, frontend]
-    
-  new_feature:
-    priority_docs:
-      - docs/dev_plan.md
-      - docs/features.md
-      - docs/structure.md
-    tags: [feature, full_stack]
-    
-  refactor:
-    priority_docs:
-      - docs/structure.md
-      - docs/project_status.md
-    tags: [architecture, backend, frontend]
+```
+docs/project_index.yaml
 ```
 
-### 4.2 AI 决策流程
+### 4.2 中枢结构
+
+```yaml
+# 三层结构
+project:                    # 项目元数据
+skills:                     # Skill 层：按需激活
+docs:                       # Doc 层：按需阅读
+files:                      # File 层：按需定位
+task_contexts:              # 任务上下文推荐
+```
+
+### 4.3 核心字段
+
+| 字段 | 用途 |
+|------|------|
+| `project` | 项目基本信息 |
+| `skills` | 本地 skill 索引（path, purpose, tags, active_when） |
+| `docs` | 项目文档索引（path, purpose, read_when, tags） |
+| `task_contexts` | 任务类型 → 推荐 skill + doc 映射 |
+
+### 4.4 AI 执行流程
 
 ```
 任务输入
   ↓
-解析任务类型（bug_fix / new_feature / refactor / unknown）
+读取 project_index.yaml
   ↓
-查 project_index.yaml → 确定推荐 docs
+根据 task_contexts 确定推荐
   ↓
-按需阅读（不强制读全部）
-  ↓
-如需具体文件，再查 structure.md 的目录映射
+激活 skill → 阅读 doc → 定位 file
 ```
-
-### 4.3 自管理 vs 轻依赖
-
-**自管理方案（0依赖）**：
-- 纯 YAML + Python 脚本（`project_index.yaml` 管理）
-- AI 读取 YAML，根据 `read_when` 和 `tags` 决定阅读范围
-- 缺点：YAML 需手动维护同步
-
-**轻依赖方案（推荐）**：
-- 用 sqlite 做增量索引（比 codegraph 轻量得多）
-- Python 脚本扫描 docs 目录，建立索引
-- AI 通过 SQL 查询"与 task 相关的 docs"
-- 依赖：Python 3 + sqlite3（标准库，无需安装）
 
 ---
 
-## 五、目录结构调整提案
+## 五、目录结构调整（已实现）
 
-### 现状
+### 现状（删除英文版前）
 
 ```
 wcs-skill/
@@ -200,34 +208,38 @@ wcs-skill/
 ├── docs/                 # 仓库自身文档
 │   ├── project_status.md
 │   ├── structure.md
-│   ├── dev_plan.md
-│   ├── dev_log.md
 │   └── ...
 └── references/           # 模板
 ```
 
-### 提案（删除英文版）
+### 当前结构（删除英文版后）
 
 ```
 wcs-skill/
-├── SKILL.md              # 中文版主技能（当前 wcs-cn/SKILL.md 提升上来）
+├── SKILL.md              # 主技能（下一步：合并 wcs-cn/SKILL.md）
+├── wcs-cn/               # 中文技能（当前维护版）
+│   ├── SKILL.md
+│   ├── references/
+│   ├── assets/
+│   └── scripts/
 ├── docs/                 # 仓库自身文档
-│   ├── project_index.yaml   # 新增：中枢文档
+│   ├── project_index.yaml   # ✅ 新增：YAML 中枢
 │   ├── project_status.md
 │   ├── structure.md
 │   ├── dev_plan.md
 │   ├── dev_log.md
 │   ├── features.md
 │   ├── error_book.md
-│   └── discussions/          # 新增：讨论存档（git 备份）
+│   ├── CODING_STANDARDS.md
+│   ├── workflow.md
+│   ├── prompt.txt
+│   └── discussions/          # ✅ 讨论存档
 │       └── 2026-06-05-three-tier-docs-architecture.md
-├── references/           # 模板
-│   ├── core_docs_template.md
-│   ├── workflow_checklists.md
-│   ├── coding_standard_template.md
-│   └── project_index_template.yaml  # 新增：中枢文档模板
-└── scripts/              # 新增：轻量工具脚本
-    └── index_docs.py    # 新增：docs 索引脚本
+└── references/           # 模板
+    ├── core_docs_template.md
+    ├── workflow_checklists.md
+    ├── coding_standard_template.md
+    └── project_index_template.yaml  # ✅ 新增：中枢文档模板
 ```
 
 ---

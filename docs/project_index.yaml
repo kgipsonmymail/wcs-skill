@@ -1,0 +1,177 @@
+# WCS 项目中枢索引
+# 用途：AI 启动开发任务时首先阅读此文件，决定需要激活的 skill/doc/file
+# 维护：随着项目演进更新此文件
+
+# ============================================================
+# 第一层：项目元数据
+# ============================================================
+project:
+  name: wcs-skill
+  type: 跨项目代码规范 skill
+  version: "1.0"
+  description: Wind Code Standard - 跨项目统一的开发流程规范
+
+# ============================================================
+# 第二层：三层上下文维度
+# ============================================================
+
+# Skill 层：本地已安装的 skill（按需激活）
+skills:
+  # 核心 skill（通常需要）
+  - name: wcs-cn
+    path: wcs-cn/SKILL.md
+    purpose: 代码规范统领，强制执行开发流程
+    tags: [workflow, standard, mandatory]
+
+  # 项目级 skill（按需）
+  - name: mediary
+    path: ../mediary/SKILL.md
+    purpose: Mediary 日记系统操作
+    tags: [project, backend-api]
+    active_when: [mediary相关开发]
+
+  - name: video-daily
+    path: ../video-daily/SKILL.md
+    purpose: 视频日历项目
+    tags: [project, fullstack]
+    active_when: [video-daily相关开发]
+
+  - name: wind-projects
+    path: ../wind-projects/SKILL.md
+    purpose: 项目入口索引
+    tags: [project, navigation]
+    active_when: [需要了解项目信息]
+
+  # 工具类 skill（按需）
+  - name: systematic-debugging
+    path: ../systematic-debugging/SKILL.md
+    purpose: 调试方法论
+    tags: [tool, debugging]
+    active_when: [调试任务]
+
+  - name: writing-plans
+    path: ../writing-plans/SKILL.md
+    purpose: 计划写作
+    tags: [tool, planning]
+    active_when: [需要制定计划]
+
+# Doc 层：项目文档（按需阅读）
+docs:
+  # 仓库自身文档（WCS skill 维护用）
+  - path: docs/project_status.md
+    purpose: 项目当前状态
+    read_when: [onboarding, status_check]
+    tags: [meta, status]
+
+  - path: docs/structure.md
+    purpose: 仓库结构
+    read_when: [onboarding, navigation]
+    tags: [meta, structure]
+
+  - path: docs/dev_plan.md
+    purpose: 开发规划
+    read_when: [planning, status_check]
+    tags: [meta, plan]
+
+  - path: docs/dev_log.md
+    purpose: 开发日志
+    read_when: [handover, history]
+    tags: [meta, log]
+
+  - path: docs/features.md
+    purpose: 已实现能力
+    read_when: [onboarding, capability_check]
+    tags: [meta, features]
+
+  - path: docs/error_book.md
+    purpose: 错误记录与解决方案
+    read_when: [bug_fix, debugging]
+    tags: [meta, error]
+
+  - path: docs/CODING_STANDARDS.md
+    purpose: 代码规范纲领
+    read_when: [coding, standard]
+    tags: [meta, standard]
+
+  - path: docs/workflow.md
+    purpose: 工作流程
+    read_when: [onboarding, workflow]
+    tags: [meta, workflow]
+
+  - path: docs/discussions/2026-06-05-three-tier-docs-architecture.md
+    purpose: 重构讨论记录
+    read_when: [discussion, evolution]
+    tags: [meta, discussion]
+
+# File 层：源代码（按需定位）
+# 注：WCS skill 自身文件较少，详见 structure.md
+files:
+  root_files:
+    - SKILL.md          # WCS 主技能定义
+    - README.md         # 仓库入口
+    - .gitignore
+
+  references:
+    - references/core_docs_template.md
+    - references/workflow_checklists.md
+    - references/coding_standard_template.md
+    - references/api_reference.md
+
+# ============================================================
+# 第三层：任务上下文 → 上下文推荐
+# ============================================================
+# AI 收到任务后，根据任务类型推荐激活的 skill 和阅读的 doc
+
+task_contexts:
+  # 默认上下文（新任务、通用）
+  default:
+    skills: [wcs-cn]
+    docs: [docs/project_status.md, docs/structure.md]
+    description: 新任务默认上下文
+
+  # Bug 修复
+  bug_fix:
+    skills: [wcs-cn, systematic-debugging]
+    docs: [docs/error_book.md, docs/dev_log.md, docs/structure.md]
+    description: Bug 修复优先看错误记录
+
+  # 新功能开发
+  new_feature:
+    skills: [wcs-cn]
+    docs: [docs/dev_plan.md, docs/features.md, docs/structure.md]
+    description: 新功能优先看规划和能力清单
+
+  # 重构
+  refactor:
+    skills: [wcs-cn]
+    docs: [docs/structure.md, docs/project_status.md, docs/features.md]
+    description: 重构优先看结构和状态
+
+  # 代码规范评审
+  code_review:
+    skills: [wcs-cn]
+    docs: [docs/CODING_STANDARDS.md, docs/workflow.md]
+    description: 评审优先看规范和流程
+
+  # 交接/接续
+  handover:
+    skills: [wcs-cn]
+    docs: [docs/dev_log.md, docs/dev_plan.md, docs/error_book.md]
+    description: 交接优先看日志和错误记录
+
+  # WCS 自身维护
+  wcs_maintenance:
+    skills: [wcs-cn]
+    docs: [docs/discussions/2026-06-05-three-tier-docs-architecture.md, docs/dev_plan.md, docs/dev_log.md]
+    description: WCS 自身开发维护
+
+# ============================================================
+# AI 执行流程说明
+# ============================================================
+# 1. 收到开发任务
+# 2. 读取本文件（project_index.yaml）
+# 3. 根据任务类型从 task_contexts 选择推荐
+# 4. 激活对应 skills（读取 SKILL.md）
+# 5. 按需阅读对应 docs（不强制全部）
+# 6. 根据 docs 引用定位具体 files
+# 7. 执行任务
