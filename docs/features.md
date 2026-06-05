@@ -11,7 +11,10 @@
 ## 仓库能力
 
 - `done`：发布 `wcs-cn/` 中文技能目录作为默认维护入口
-- `done`：保留 `wcs/` 英文技能目录作为兼容版本
+- `done`：**删除 `wcs/` 英文技能目录**（2026-06-05）
+- `done`：提供 `docs/project_index.yaml` YAML 中枢索引
+- `done`：提供三层架构支持（skill → doc → file）
 - `done`：提供公开可读的安装与使用说明
 - `done`：提供独立的规划文档，区分已完成、当前重点和待开发事项
 - `done`：提供状态、结构、日志、问题手册等仓库治理文档
+- `done`：提供重构讨论存档（`docs/discussions/`）
