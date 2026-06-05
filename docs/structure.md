@@ -2,22 +2,41 @@
 
 ## 顶层目录
 
-- `wcs-cn/`：中文技能主目录，当前维护默认围绕这里展开
-- `wcs/`：英文技能目录，仓库保留但可忽略日常维护
-- `README.md`：仓库入口与使用说明
-- `LICENSE`：开源许可证
-- `docs/`：规划、状态、日志、流程和治理文档
+```
+wcs-skill/
+├── wcs-cn/               # 中文技能主目录（当前维护版）
+├── docs/                 # 仓库自身文档
+│   ├── project_index.yaml  # YAML 中枢索引
+│   ├── discussions/        # 重构讨论存档
+│   ├── project_status.md
+│   ├── structure.md
+│   ├── dev_plan.md
+│   ├── dev_log.md
+│   ├── features.md
+│   ├── error_book.md
+│   ├── CODING_STANDARDS.md
+│   ├── workflow.md
+│   └── prompt.txt
+├── references/            # WCS 模板
+│   ├── core_docs_template.md
+│   ├── workflow_checklists.md
+│   ├── coding_standard_template.md
+│   └── project_index_template.yaml  # 中枢文档模板
+├── SKILL.md              # 主技能定义
+├── README.md             # 仓库入口
+└── LICENSE              # MIT 许可证
+```
 
 ## 参考文件
 
-- `wcs-cn/references/api_reference.md`：WCS 引用资料入口
-- `wcs-cn/references/core_docs_template.md`：基线文档模板
-- `wcs-cn/references/coding_standard_template.md`：通用代码规范模板
-- `wcs-cn/references/workflow_checklists.md`：端到端流程清单
+- `references/core_docs_template.md`：基线文档模板
+- `references/coding_standard_template.md`：通用代码规范模板
+- `references/workflow_checklists.md`：端到端流程清单
+- `references/project_index_template.yaml`：中枢文档模板
 
 ## 维护导航
 
-- 修改中文技能行为时，优先维护 `wcs-cn/SKILL.md`
-- 修改中文流程引用资料时，优先维护 `wcs-cn/references/`
+- 修改中文技能行为时，维护 `wcs-cn/SKILL.md`
+- 修改中枢索引时，更新 `docs/project_index.yaml`
 - 记录仓库级维护动作时，更新 `docs/dev_log.md`
 - 维护公开说明与导航时，更新 `README.md`
