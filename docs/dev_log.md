@@ -37,6 +37,21 @@
 - `git log` 查看提交 `4edd956`
 - `git show 4edd956 --stat` 查看变更文件列表
 
+### 2026-06-06 下午 续 - Git vs 部署版分离决策确认
+
+#### 确认内容
+
+- **部署版**（`wcs-cn/`）**无 `docs/`**，只包含 `SKILL.md` + `references/`
+- **prompt.txt** 存在于两个位置：
+  1. Git 版本的 `docs/prompt.txt`（WCS 自用）
+  2. 用户开发项目中的 `docs/prompt.txt`（AI 实际使用时读）
+- Git 版本 `wcs-cn/SKILL.md` 更新说明，明确部署版结构
+- `docs/discussions/2026-06-06-git-vs-deploy-version.md` 同步更新，整理为"已确认"+"待确认"两部分
+
+#### 验证情况
+
+- `git push` 成功（commit `66409ea`）
+
 ---
 
 ## 2026-06-05 下午 - WCS v2.0：七大模块完成
