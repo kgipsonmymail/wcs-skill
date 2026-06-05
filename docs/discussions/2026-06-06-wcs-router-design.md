@@ -171,35 +171,56 @@ route_decision:
 
 ### 4.1 路由决策谁来执行？
 
-**选项 A：WCS 自己执行路由逻辑（内置）**
+**✅ 已确认：选项 A — 路由逻辑内置 SKILL.md**
 
-- 优点：WCS 加载时自带路由能力，不需要外部依赖
-- 缺点：SKILL.md 的路由规则是静态的，无法动态更新
+- 理由：简单、直接、无额外依赖
+- 后续若需复杂推理，再考虑外部脚本
 
-**选项 B：WCS 调用外部路由脚本（如 scan_router.py）**
+### 4.4 `project_index.yaml` 的分层策略
 
-- 优点：路由逻辑可以独立迭代，支持复杂推理
-- 缺点：引入了额外的执行依赖
+**✅ 已确认：按项目放置，只管 skill 和 doc**
 
-**选项 C：结合 A 和 B**
+- `project_index.yaml` 放在哪个项目，就管理那个项目的开发
+- 例：在 `mediary-dev/` 里就管 mediary 的开发，在 `video-daily/` 里就管 video-daily 的开发
+- **file 层不纳入 YAML 管理**——file 由 doc 和 skill 来管理，doc 描述项目知识，skill 定义操作规范，skill/doc 再引导定位到具体的 file
+- 这样 YAML 只需要维护"任务类型 → skill/doc"的映射，不需要跟踪每一个文件
 
-- 默认路由规则内置在 SKILL.md
-- 复杂场景调用 `scripts/route.py`
-- 项目可自定义 `project_index.yaml` 覆盖默认
+**分层架构（确认版）**：
 
-### 4.2 `project_index.yaml` 的位置？
+```
+project_index.yaml
+    │← 放在项目根目录，只管 skill 和 doc
+    ↓
+skill 层（skill/ 目录或 ~/.hermes/skills/）
+    │← skill 定义操作规范，引导定位 file
+    ↓
+doc 层（docs/ 目录）
+    │← doc 描述项目知识，引导理解 file
+    ↓
+file 层（源代码）
+    │← 最终执行和定位的对象
+```
 
-**当前**：`docs/project_index.yaml`（在 wcs-skill 自己的 docs/ 里）
+### 4.2 中枢索引的实时性问题
 
-**问题**：这个中枢索引应该属于 **wcs-skill 自身**，还是 **目标项目**？
+**❓ 待讨论：懒加载 vs 实时索引**
 
-- 如果属于 wcs-skill 自身 → WCS 只知道"有哪些 skill/doc"，不知道"目标项目的具体结构"
-- 如果属于目标项目 → 每个项目需要维护自己的 `project_index.yaml`
+成本与功能对比：
 
-**初步结论**：两者分离
-- wcs-skill 的 `docs/project_index.yaml` → 定义"通用任务类型 → 通用 skill/doc 映射"
-- 目标项目的 `docs/project_index.yaml` → 定义"项目特定的任务类型 → 项目特定的 doc/file 映射"
-- WCS 加载时**先读目标项目的 `project_index.yaml`**，在此基础上叠加通用规则
+| | 懒加载（静态 YAML） | 实时索引（codegraph 方案） |
+|--|--|--|
+| 维护成本 | 低——YAML 手动更新 | 高——需要后台进程持续扫描 |
+| 精度 | 可能与实际有偏差 | 始终与实际同步 |
+| 复杂度 | 简单，YAML 即是文档 | 复杂，需要文件监控/定期扫描 |
+| 适用场景 | 中小项目，文档变动不频繁 | 大型项目，文件结构经常变化 |
+
+**当前倾向**：采用懒加载（静态 YAML）
+
+- 理由：YAML 本身就是 doc 的一部分，AI 在阅读 doc 时自然会更新认知
+- 当 AI 发现 YAML 与实际不符时，可触发更新（类似于 doc_sync_checklist）
+- 若未来项目变大变复杂，再考虑引入实时索引方案
+
+**待 Wind 确认**：你是否遇到过"静态 YAML 导致路由决策失误"的场景？实时索引对你的项目是否有实际需求？
 
 ### 4.3 如何避免"中枢索引 itself becomes a problem"？
 
@@ -230,12 +251,22 @@ file 层：doc 引导定位哪些 file
 
 ## 五、行动项
 
-- [ ] **讨论确认**：路由决策的执行方式（4.1）
-- [ ] **讨论确认**：`project_index.yaml` 的分层策略（4.2）
-- [ ] **讨论确认**：懒加载 vs 实时索引（4.3）
-- [ ] **讨论确认**：一次性路由 vs 分阶段路由（4.4）
-- [ ] **设计**：新的 SKILL.md 结构（router-first）
-- [ ] **实现**：新的路由决策流程原型
+### 已完成讨论
+
+- [x] **✅ 4.1**：路由逻辑内置 SKILL.md（暂不考虑外部脚本）
+- [x] **✅ 4.4**：project_index.yaml 按项目放置，只管 skill 和 doc
+
+### 待讨论
+
+- [ ] **4.2**：懒加载 vs 实时索引（待 Wind 确认是否有实际需求）
+- [ ] **4.3**：如何避免"中枢索引 itself becomes a problem"（关联 4.2）
+- [ ] **4.5**：一次性路由 vs 分阶段路由（待 Wind 确认理解场景）
+
+### 待执行
+
+- [ ] **设计**：新的 SKILL.md 结构（router-first，基于确认的架构）
+- [ ] **实现**：将 `project_index.yaml` 从 wcs-skill/docs/ 迁移到 wcs-cn/references/ 作为模板，目标项目使用模板生成自己的索引
+- [ ] **清理**：Modules 1-7 产出中，哪些是路由器需要的（保留），哪些可以清理（废弃）
 
 ---
 
