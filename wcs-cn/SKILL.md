@@ -252,6 +252,31 @@ project_index.yaml → CODING_STANDARDS.md → 待审查代码
 
 ---
 
+## 维护触发机制
+
+### Errorbook 释放检查
+
+在 Bug 阶段或维护阶段，读取 errorbook 后检查：
+
+**若满足任一条件，在 Session 反思块里输出释放建议**：
+- 条目数量 > 15 → 建议释放
+- 时间 > 1 个月未释放 → 建议释放
+- 用户说"清理 errorbook" → 触发完整释放流程
+
+**释放流程**（详见 `docs/errorbook_release.md`）：
+1. 阅读全部条目
+2. 分类归纳到对应文档（CODING_STANDARDS / features / workflow 等）
+3. 更新 error_book.md（保留仍有效的，标记已归纳的）
+4. 在 dev_log.md 记录释放情况
+
+**Session 反思块同步更新**：
+
+```
+- **维护检查**：[errorbook 条目数 / 是否需要释放]
+```
+
+---
+
 ## 必备文档基线
 
 AI 在**目标项目**中维护以下基线文档。若缺失，先使用 `references/core_docs_template.md` 创建：
@@ -301,6 +326,7 @@ AI 在**目标项目**中维护以下基线文档。若缺失，先使用 `refer
 - **初始加载**：[开场读了哪些 doc / 是否符合最小化原则]
 - **Skill 激活**：[激活了哪些 skill / 是否符合按需激活原则]
 - **按需展开**：[后续读了哪些 doc / 是否按状态展开]
+- **维护检查**：[errorbook 条目数 / 是否需要释放]
 - **违反记录**：[若有违反最小化原则，说明原因]
 - **本次总结**：[一句话描述本次是否符合 WCS 原则]
 ```
