@@ -1,5 +1,74 @@
 # 开发日志
 
+## 2026-06-07 续 - Subagent 监督闭环
+
+### 问题背景
+
+Pilot 项目 Mediary 使用 delegate_task 分配任务给 subagent 实现"文档版本历史回溯"功能。Subagent 完成代码实现后：
+- ❌ 未执行 git commit
+- ❌ 未更新 dev_log.md
+- ⚠️ 误将二进制文件 `mediary-server` 加入跟踪
+
+主 Agent 发现后手动补救：清理二进制、执行 git commit（`02a3bdd`）、补充 dev_log 记录。
+
+### 根因分析
+
+1. **Context 缺失**：传给 subagent 的 context 没有明确要求它执行 git commit + dev_log
+2. **无强制退出前检查**：subagent 达到 max_iterations 直接退出，没有强制输出机制
+3. **SKILL.md 里没有 subagent 协作规范**：只有多 AI 协作约定，没有 subagent 特殊规则
+
+### 解决方案
+
+**1. Subagent context 必须包含强制完成项：**
+```
+【强制完成项 - 退出前必须全部执行】
+1. git commit 所有变更（变更内容必须描述清楚）
+2. 更新 docs/dev_log.md（新功能记录）
+3. 确认无二进制文件被 git 跟踪
+4. 输出 Session 反思块
+
+【禁止项】
+- 禁止将二进制文件加入 git 跟踪
+- 禁止在未 commit 的情况下退出
+```
+
+**2. 主 Agent 监督流程（subagent 返回后）：**
+```
+1. 检查 subagent 是否执行了 git commit → 若无：主 Agent 执行 + 说明原因
+2. 检查 dev_log.md 是否已更新 → 若无：主 Agent 补充记录
+3. 检查是否有二进制文件被误跟踪 → 若有：清理 + git 恢复
+4. 在 Session 反思块中记录 subagent 执行情况
+```
+
+**3. Subagent 反思块（subagent 必须输出）：**
+```
+## Subagent 反思
+- git commit：是/否，若否则说明原因
+- dev_log 更新：是/否，若否则说明原因
+- 二进制清理：是/否，若否则说明原因
+- 未完成任务：列出因迭代限制未完成的事项
+- 改进建议：若有任何规则违反或流程问题
+```
+
+**4. max_iterations 设置原则：**
+- 简单任务：默认 50 次
+- 复杂任务（预计 > 30 次 tool 调用）：设置 100+ 次
+- 若 subagent 报告"接近迭代上限"，主 Agent 立即收回任务
+
+**5. Session 反思块新增 subagent 监督字段**
+
+### 验证情况
+
+- commit `a963af2`：SKILL.md 新增 Subagent 监督闭环章节 + Session 反思块更新
+- commit `02a3bdd`：Mediary 版本历史功能（subagent 成果，主 Agent 补救提交）
+
+### 回滚方式
+
+- `git show a963af2` 查看本次 SKILL.md 变更
+- `git show 02a3bdd` 查看 Mediary 版本历史功能提交
+
+---
+
 ## 2026-06-07 - 状态展开式流程优化讨论
 
 ### 讨论背景
