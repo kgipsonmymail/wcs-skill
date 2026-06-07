@@ -1,5 +1,93 @@
 # 开发日志
 
+## 2026-06-07 - 状态展开式流程优化讨论
+
+### 讨论背景
+
+与 Wind 在飞书讨论 WCS 优化方向。核心问题：现有 WCS 虽然设计了状态机制，但文档一次性全塞给 AI，上下文负担重。
+
+### 核心思路：触发式加载 vs 全量加载
+
+**旧思路**：加载 skill 时把全部 docs 路径都塞给 AI，让 AI 自己决定读什么
+**新思路**：先识别状态，根据状态决定读哪个文档，读完再决定下一步
+
+### 展开式文档读取流程
+
+```
+WCS 入口（读 project_index.yaml） → 状态识别 → 按状态加载对应 doc → 按需展开下一步
+```
+
+### 状态与文档读取顺序（按 Wind 确认）
+
+| 阶段 | 文档读取顺序 |
+|------|-------------|
+| 计划阶段 | project_index.yaml → dev_plan.md → （按需）features.md |
+| 开发阶段 | project_index.yaml → CODING_STANDARDS.md → workflow.md → （按需）architecture.md |
+| Bug 阶段 | project_index.yaml → errorbook.md → （按需）dev_log.md 查相关模块 |
+| 需求阶段 | project_index.yaml → features.md → dev_plan.md → （按需）architecture.md |
+| 维护阶段 | project_index.yaml → dev_log.md → project_status.md |
+| 审查阶段 | project_index.yaml → review_checklist.md |
+
+### 最小化上下文原则
+
+1. **不要一开始就读 dev_log.md** — 太大了，按需才读
+2. **不要一开始就读 architecture.md** — 只有架构相关问题才读
+3. **不要一开始就读 errorbook.md** — 只有修 bug 才读
+4. **project_index.yaml 是唯一开场必读** — 项目概览，最小信息量
+
+### 状态识别触发词
+
+| 状态 | 触发词 |
+|------|--------|
+| 计划阶段 | "我要做..."、"计划"、"打算" |
+| 开发阶段 | "写个..."、"实现..."、"开发" |
+| Bug阶段 | "报错"、"bug"、"坏了"、"崩溃" |
+| 需求阶段 | "加个功能..."、"新需求"、"加一个" |
+| 维护阶段 | "日常维护"、"更新依赖"、"整理" |
+| 审查阶段 | "帮我看看代码"、"review"、"评审" |
+
+### 待落地
+
+- ~~review_checklist.md 是否存在（审查阶段需要）~~ → 已确认审查阶段直接读 CODING_STANDARDS.md
+- 已实施：更新 SKILL.md 加入状态识别 + 最小化开场原则
+
+### 验证情况
+
+- SKILL.md 已完全重写（约 7800 字符）
+- 核心变化：状态识别提前、最小化开场、展开式加载
+- workflow_checklists.md 作为参考文献保留，按需激活
+
+### 2026-06-07 续 - Session 反思块
+
+新增**零依赖自我衡量机制**：在 SKILL.md 的输出约定里加入 Session 反思块。
+
+**核心借鉴**：
+- systematic-debugging 的 Iron Law（强制自检）
+- subagent-driven-development 的阶段输出声明
+- plan 的结构化交付物
+
+**反思块格式**：
+```
+## Session 反思
+- 状态识别：[识别了什么状态/是否准确]
+- 初始加载：[开场读了哪些 doc / 是否符合最小化原则]
+- 按需展开：[后续读了哪些 doc / 是否按状态展开]
+- 违反记录：[若有违反最小化原则，说明原因]
+- 本次总结：[一句话描述本次是否符合 WCS 原则]
+```
+
+**设计思路**：
+- 对用户可见，形成监督闭环
+- 自我审计数据可积累用于 WCS 迭代
+- 零依赖实现，不增加外部依赖
+
+### 回滚方式
+
+- 本次为讨论记录，无需回滚
+- 具体代码变更待实施
+
+---
+
 ## 2026-06-06 下午 - 文档质量整理与 Git vs 部署版分离
 
 ### 变更内容
