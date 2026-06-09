@@ -25,3 +25,4 @@
 - `done`：**Module 5（SQLite 索引）**：`scripts/scan_structure.py` + 实验结论文档（2026-06-05）
 - `done`：**Module 6（Errorbook 释放）**：`docs/errorbook_release.md` 定义生命周期（2026-06-05）
 - `done`：**Module 7（Docs 架构评估）**：`docs/docs_architecture_review.md` 给出评估结论（2026-06-05）
+- `done`：**自我迭代机制**：`docs/wcs_self_iteration.md` 定义 WCS 自我迭代标准流程，含触发条件、判断方法、落地步骤（2026-06-10）
