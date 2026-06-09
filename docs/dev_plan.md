@@ -132,6 +132,8 @@
 
 - `done`：Module 8（待定义）——基于三层架构优化的下一阶段
 - `done`：mediary-dev SM18 页面开发（2026-06-09）
+- `done`：WCS 自我评估复盘（2026-06-10）：发现 project_index.yaml 维护阶段价值不足问题，修正为"没读是违反规则"
+- `done`：WCS 优化：project_index.yaml 增加 maintenance 字段 + SKILL.md 强化开场必读规则（2026-06-10）
 - `todo`：部署版 wcs-cn 的目录结构确认（Git 版本 vs 部署版本分离方案落地）
 - `todo`：uin.md 释放机制落地（用户输入缓存 → 归档流程）
 
