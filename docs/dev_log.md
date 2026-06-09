@@ -1,5 +1,38 @@
 # 开发日志
 
+## 2026-06-10 晚 - mediary-dev document list state localStorage 持久化
+
+### 背景
+
+Wind 反馈：文档列表页设置筛选条件后点击进入文档，再返回列表时筛选条件丢失。原因：Documents 组件在路由切换时完全卸载，`useState` 状态全丢。需要将状态提升到全局 store 并持久化。
+
+### 变更内容
+
+**新增 `src/stores/documentListStore.ts`**：
+- Zustand store，集中管理 Documents 页面所有状态（筛选条件、页码、视图模式、滚动位置、选中项）
+- Zustand `persist` middleware，写入 localStorage key `mediary-doc-list`
+- `partialize` 排除运行时状态：scrollTop（刷新后回到顶部）、selectedIds（不清洗状态）
+
+**改造 `src/pages/Documents.tsx`**：
+- 所有 `useState` 替换为 `useDocumentListStore` 的读写
+- 列表容器加 `ref`，在 `useEffect` 中恢复/保存 scrollTop
+
+**设计决策**：
+- 刷新页面：筛选条件 + 页码保留，滚动位置回到顶部
+- 路由切换（进入文档再返回）：筛选条件 + 页码 + 滚动位置全部保留
+- `selectedIds` 不持久化（防止跨会话残留选中状态）
+
+### 验证情况
+
+- Wind 确认刷新页面后筛选条件保留 ✓
+- 进入文档再返回，筛选条件和滚动位置保留 ✓
+
+### 回滚方式
+
+- 恢复 `Documents.tsx` 的 `useState` 版本，删除 `documentListStore.ts`
+
+---
+
 ## 2026-06-09 晚 - mediary-dev SM18 页面全新开发
 
 ### 背景

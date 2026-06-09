@@ -15,8 +15,14 @@ project:
 # 维护状态（每次维护后更新此处）
 # ============================================================
 maintenance:
-  current_focus: "mediary-dev SM18 页面已完成开发（5 Tab），待验证并根据 Wind 反馈持续迭代"
+  current_focus: "mediary-dev 新增 document list state localStorage 持久化（筛选/页码刷新不丢失），同步 WCS 文档记录"
   recent_changes:
+    - date: "2026-06-10"
+      change: "mediary-dev document list state localStorage 持久化：Zustand persist middleware + partialize 排除运行时状态（scrollTop/selectedIds）"
+    - date: "2026-06-10"
+      change: "mediary-dev 文档列表状态提升到 Zustand store（documentListStore），解决路由切换导致筛选条件丢失问题"
+    - date: "2026-06-10"
+      change: "mediary-dev 导航历史返回按钮全新开发（navigationHistoryStore + NavigationBackButton）"
     - date: "2026-06-09"
       change: "mediary-dev SM18 页面全新开发：后端 5 个接口 + 前端 5 Tab（回顾/卡片/标签/配置/项目）"
     - date: "2026-06-10"
