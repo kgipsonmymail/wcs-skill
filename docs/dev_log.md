@@ -1,5 +1,96 @@
 # 开发日志
 
+## 2026-06-09 晚 - mediary-dev SM18 页面全新开发
+
+### 背景
+
+Wind 提出在 mediary-dev 中开发 SM18 回顾功能。SM18 是一种间隔重复算法（类比 sm18/SuperMemo 体系），用于安排文档在未来回看的天数，达到长期记忆巩固的目的。
+
+### 开发内容
+
+mediary-dev 后端 (`/www/wwwroot/mediary-dev/backend/`) + 前端 (`/www/wwwroot/mediary-dev/frontend/`) 全新开发 SM18 页面。
+
+#### 后端（Go + Gin）
+
+新增表结构：
+- `sm18_cards`：文档卡片（document_id、next_review_at、interval_days、ease_factor、created_at）
+- `sm18_card_configs`：卡片配置（project_name、enabled、diary_doc_id）
+- `sm18_review_logs`：回顾记录（card_id、reviewed_at、quality、interval_before、interval_after）
+
+新增 Repository 层函数（`repository/sm18.go`）：
+- `CreateCardIfNotExists`、`GetCardByDocumentID`、`UpdateCardAfterReview`
+- `ListCardsToReview`、`GetReviewLogsByCardID`
+- `BatchAddByTags`、`BatchRemoveByTags`、`BatchUpdateConfigByTags`、`GetTagsSummary`
+
+新增 Handler 层接口（`handler/sm18.go`）：
+- `POST /sm18/cards` — 加入一张卡片
+- `GET /sm18/cards/:doc_id` — 获取文档对应卡片状态
+- `POST /sm18/review/:card_id` — 提交回顾打分
+- `GET /sm18/review/next` — 获取下一张待回顾卡片
+- `GET /sm18/review/logs/:card_id` — 获取回顾记录
+- `GET /sm18/tags/summary` — 获取所有标签的 SM18 统计
+- `GET /sm18/tags/preview` — 预览标签下的文档
+- `POST /m18/tags/batch-add` — 按标签批量加入 SM18
+- `POST /sm18/tags/batch-remove` — 按标签批量移出 SM18
+- `PUT /sm18/tags/batch-config` — 按标签批量配置
+
+Router 层：`router.go` 注册 `/sm18/` 路由组
+
+#### 前端（React + TypeScript + Vite）
+
+新页面 `src/pages/SM18.tsx`，5 个 Tab：
+
+**回顾 Tab（默认）**
+- 获取 next_review_at ≤ now 的卡片，按过期时间排序
+- 显示文档标题、文档ID、过期分钟/天数
+- 5 档打分按钮（1-5 quality）
+- 提交后自动"下一篇"
+
+**卡片 Tab**
+- 分页列表展示所有卡片
+- 筛选：全部 / 在SM18 / 不在SM18
+- 可按文档标题搜索
+- 显示每张卡的 interval/ease_factor/next_review
+
+**标签 Tab**
+- 获取所有标签统计（doc_count、in_sm18_count、not_in_sm18_count）
+- 搜索过滤标签
+- 多选标签 → 批量加入 / 批量移除 / 批量配置
+- 预览功能：执行前查看影响范围
+
+**配置 Tab**
+- 按 project_name 分组
+- 每个项目可设置：project_name、enabled、diary_doc_id（Mediary 文档ID）
+- 保存时调用批量配置接口
+
+**项目 Tab**
+- 从 config 表按 project_name 分组聚合
+- 每个项目显示：卡片数、均间隔天数、平均 ease_factor
+- 点击进入该项目的配置编辑
+
+SM18 算法实现（`repository/sm18.go`）：
+```
+quality ≥ 3（成功）：interval = interval * ease_factor，ease_factor += 0.1
+quality < 3（失败）：interval = 1，ease_factor -= 0.2（最低0.1）
+next_review_at = now + interval_days
+```
+
+### 验证情况
+
+- Backend build: `go build` 成功
+- Backend service: `mediary-dev` 重启运行中（PID 1307198）
+- Frontend build: `npm run build` 成功，生成 `index-DMAZnc1K.js`（1098449 bytes）
+- API 测试：全部 23 个业务逻辑测试通过，5 个 HTTP 新接口测试通过
+- 页面访问：`dev.7ygv.com/sm18`
+
+### 回滚方式
+
+- Backend: `git log` 在 `/www/wwwroot/mediary-dev/backend/` 查找 commit
+- Frontend: `git log` 在 `/www/wwwroot/mediary-dev/frontend/` 查找 commit
+- 数据库: `sm18_cards`、`sm18_card_configs`、`sm18_review_logs` 三张新表
+
+---
+
 ## 2026-06-07 续 - Subagent 监督闭环
 
 ### 问题背景
