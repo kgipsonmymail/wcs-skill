@@ -1,5 +1,50 @@
 # 开发日志
 
+## 2026-06-10 - mediary skill 调用成功率优化
+
+### 背景
+
+Wind 反馈：询问"能查看 mediary 文档吗"时，AI 无法直接识别并触发 skill，而是绕了一大圈。另有高频 401 失败问题。
+
+### 识别问题修复
+
+**文件**：`mediary/SKILL.md` description 字段
+
+**变更**：穷举所有触发词变形：
+- 大小写：`med`/`Med`/`MED`/`mediary`/`Mediary`/`MEDIARY`
+- 拼写变体：`medairy`/`Medairy`
+- 中文：`我的日记`/`日记`/`日记本`/`文档池`
+- 组合：`med文档`/`mediary文档`
+- 关联：`i人大冒险`（Mediary 内标签）
+
+### 调用问题修复
+
+**文件**：`mediary/SKILL.md` 新增「标准化调用规范」章节
+
+**核心教训**：`execute_code` 的 Python 不会自动加载 `.env`，必须手动解析文件。
+- ❌ `os.environ.get("MEDIARY_API_KEY")` → 永远是 None
+- ✅ 每次用 `open("/root/.hermes/skills/mediary/.env")` 读取
+
+**新增内容**：
+- `api_get(path)` / `api_put(path, body)` / `api_post(path, body)` 辅助函数模板
+- 验证流程：每次调用前先用 `/documents?page=1&limit=1` 验证认证
+
+### Git 推送情况
+
+- `.env` 被误删（rebase 冲突导致），已重建为占位符版本，**需要 Wind 补全 API Key**
+- 远程仓库有 forced update（1db4830），rebase 后正常推送
+- 推送成功：6a0f65c
+
+### 回滚方式
+
+```bash
+git revert 6a0f65c  # 回退 skill 改动
+```
+
+### 待 Wind 跟进
+
+- [ ] mediary `.env` 中的 `MEDIARY_API_KEY=***请填入完整API Key***` 需要补全
+
 ## 2026-06-10 晚 - mediary-dev document list state localStorage 持久化
 
 ### 背景

@@ -15,8 +15,10 @@ project:
 # 维护状态（每次维护后更新此处）
 # ============================================================
 maintenance:
-  current_focus: "mediary-dev 新增 document list state localStorage 持久化（筛选/页码刷新不丢失），同步 WCS 文档记录"
+  current_focus: "mediary skill 调用成功率优化：触发词穷举变形 + 标准化调用规范（.env 手动解析）"
   recent_changes:
+    - date: "2026-06-10"
+      change: "mediary skill: 触发词穷举 + 标准化调用规范（.env 不会自动加载，必须手动解析）"
     - date: "2026-06-10"
       change: "mediary-dev document list state localStorage 持久化：Zustand persist middleware + partialize 排除运行时状态（scrollTop/selectedIds）"
     - date: "2026-06-10"
