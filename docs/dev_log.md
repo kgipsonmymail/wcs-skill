@@ -45,6 +45,10 @@ git revert 6a0f65c  # 回退 skill 改动
 
 - [ ] mediary `.env` 中的 `MEDIARY_API_KEY=***请填入完整API Key***` 需要补全
 
+### 新增维护记录
+
+- [x] 2026-06-10：mediary skill 新增 `error_book.md`，记录 .env 覆盖事故及根因分析
+
 ## 2026-06-10 晚 - mediary-dev document list state localStorage 持久化
 
 ### 背景
