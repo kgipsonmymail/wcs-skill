@@ -1,6 +1,32 @@
 # 开发日志
 
-## 2026-06-10 - mediary skill 调用成功率优化
+## 2026-06-10 下午 - WCS 维护：mediary skill 日常维护
+
+### 维护内容
+
+**1. 清除筛选条件按钮**
+
+- 文件：`mediary-dev/frontend/src/pages/Documents.tsx`
+- 行为：搜索框右侧，当有筛选条件时显示"清除"链接，点击清空所有条件（keyword、typeFilter、标签、日期范围）
+- 顺便清理：`index.ts` 调试日志、删除了无用的 `footnotes.ts`
+
+**2. CSS 变量调试教训**
+
+- 问题：wechat view 中 block 颜色不跟随主题变化，刷新后好了
+- 根因：CSS 变量 `--md-text-color` 通过 `injectThemeCSS()` 运行时注入，不是 CSS 文件静态声明
+- 教训：CSS `var()` fallback 值只有在变量"已定义但被覆盖"时才有用；如果变量根本不存在，fallback 永远是默认值
+- 记录位置：`mediary/SKILL.md` Pitfalls 区
+
+### 验证情况
+
+- `npm run build` 成功
+- `mediary-dev.service` 重启运行中
+
+### 回滚方式
+
+- `cd /www/wwwroot/mediary-dev/frontend && git log` 查找本次 commit
+
+---
 
 ### 背景
 

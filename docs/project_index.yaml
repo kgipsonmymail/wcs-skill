@@ -15,10 +15,12 @@ project:
 # 维护状态（每次维护后更新此处）
 # ============================================================
 maintenance:
-  current_focus: "mediary skill 调用成功率优化：触发词穷举变形 + 标准化调用规范（.env 手动解析）"
+  current_focus: "mediary skill 维护：清除筛选按钮开发完成（2026-06-10），新增 CSS 变量调试教训（Pitfalls 区）"
   recent_changes:
     - date: "2026-06-10"
-      change: "mediary skill: 触发词穷举 + 标准化调用规范（.env 不会自动加载，必须手动解析）"
+      change: "mediary skill: 清除筛选条件按钮（Documents.tsx），有筛选条件时显示在搜索框右侧"
+    - date: "2026-06-10"
+      change: "mediary skill: CSS 变量 fallback 调试教训 —— \"不变\"不一定是优先级问题，可能是变量根本不存在"
     - date: "2026-06-10"
       change: "mediary-dev document list state localStorage 持久化：Zustand persist middleware + partialize 排除运行时状态（scrollTop/selectedIds）"
     - date: "2026-06-10"
