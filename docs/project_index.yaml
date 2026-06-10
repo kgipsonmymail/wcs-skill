@@ -15,8 +15,16 @@ project:
 # 维护状态（每次维护后更新此处）
 # ============================================================
 maintenance:
-  current_focus: "mediary skill 维护：清除筛选按钮开发完成（2026-06-10），新增 CSS 变量调试教训（Pitfalls 区）"
+  current_focus: "WCS 自身维护：features.d/ 和 structure.d/ 填充完成，errorbook 积累机制建立（2026-06-10）"
   recent_changes:
+    - date: "2026-06-10"
+      change: "WCS: features.d/ 和 structure.d/ 全面填充，关键对象和关联映射完整"
+    - date: "2026-06-10"
+      change: "WCS: errorbook 积累机制建立（遇到 bug 立刻记，释放阈值20），Bug 阶段标准4步排查流程写入 features.md"
+    - date: "2026-06-10"
+      change: "WCS: features.md/structure.md 建立 dynamic 维护触发机制和联动映射"
+    - date: "2026-06-10"
+      change: "WCS: dev_log.md 重新定位为里程碑摘要（640行旧内容清除），与 git log 互为补充"
     - date: "2026-06-10"
       change: "mediary skill: 清除筛选条件按钮（Documents.tsx），有筛选条件时显示在搜索框右侧"
     - date: "2026-06-10"

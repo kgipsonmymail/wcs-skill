@@ -13,9 +13,12 @@
 
 ## 2026-06 WCS 自身迭代
 
-- 2026-06-10：WCS errorbook 积累机制建立（遇到 bug 立刻记，不等释放）
-- 2026-06-10：WCS errorbook 释放阈值从 15 调整到 20
-- 2026-06-10：WCS dev_log 重新定位为里程碑文档，不再堆放有效信息
+- 2026-06-10：WCS features.d/ 和 structure.d/ 全面填充，关键对象和关联映射完整
+- 2026-06-10：WCS errorbook 积累机制建立（遇到 bug 立刻记，释放阈值20）
+- 2026-06-10：WCS Bug 阶段标准4步排查流程写入 features.md
+- 2026-06-10：WCS features.md/structure.md 建立 dynamic 维护触发机制和联动映射
+- 2026-06-10：WCS dev_log.md 重新定位为里程碑摘要（640行旧内容清除）
+- 2026-06-10：WCS errorbook 积累机制 + features/structure 重新定位
 - 2026-06-07：WCS 状态展开式加载（project_index → 按状态读 doc → 按需展开下一步）
 - 2026-06-07：WCS Subagent 监督闭环（强制完成项 + 退出前检查 + 主 Agent 补救）
 - 2026-06-05：WCS v2.0 七大模块完成（task_contexts / 状态触发 / skill 索引 / doc 同步 / SQLite 索引 / errorbook 释放 / docs 架构评估）
