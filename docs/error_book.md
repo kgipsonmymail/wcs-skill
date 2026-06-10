@@ -7,7 +7,38 @@
 
 ## 当前已知问题
 
-（无）
+### blockToWechatHtml 两套渲染路径导致主题色不一致
+
+**问题**：公众号版 shared 页面切换主题色后，有些加粗跟随主题色，有些始终黑色
+**调试时间**：1.5 小时
+**尝试过程**：
+1. 确认 `default.css` 的 `.md-strong { color: inherit }` 存在
+2. 确认 reading view 通过 `injectThemeCSS` 注入 `.md-strong { color: ${color} !important }`
+3. 确认 shared 页面没有引入任何 CSS 文件（无 import，无 `injectThemeCSS` 调用）
+4. 确认 shared 页面编译后的 `default.css` 里 `.md-strong{color:#6366f1}` 是硬编码 indigo，不是用户选择的主题色
+5. 追溯 `blockToWechatHtml` 发现：paragraph/list/alert/blockquote 用 `renderInlineMarkdown`（inline style ✅），但 default case 和 table cells 用 `md()` → `renderMarkdownSync`（输出 `<strong class="md-strong">` ❌）
+**根因**：`blockToWechatHtml` 内部有两套渲染机制——
+- `renderInlineMarkdown(text, color)` → 调用 `marked.parseInline()` 直接处理文本，**inline style** 输出 `style="color:${color} !important;font-weight:bold;"`
+- `md()` → `renderMarkdownSync(text)` → 调用 `marked.parse()` 全量渲染，**CSS class** 输出 `<strong class="md-strong">`
+
+shared 页面没有引入 `default.css`，所以 `.md-strong` 没有颜色定义，显示默认黑色（而非主题色）。
+
+reading view 之所以正常，是因为 `injectThemeCSS` 在 `:root` 注入 `.md-strong { color: ${color} !important }`，覆盖了 `default.css` 里的 `color: inherit`。
+
+**解决**：`blockToWechatHtml` 的 default case（`blockToWechatHtml` 函数内 case "default"）和 table cells/th 全部改用 `renderInlineMarkdown(content, color)`，统一走 inline style 路径。同时删除废弃的 `md()` 函数和 `renderMarkdownSync` import。
+
+**涉及文件**：
+- `frontend/src/pages/SharedDocument.tsx` — `blockToWechatHtml` 函数，default case（第 619 行）、table td（第 603 行）、table th（第 595 行）
+- `frontend/src/lib/md-renderer/themes/default.css` — `.md-strong` 定义（第 175 行）
+- `frontend/src/lib/md-renderer/themes/index.ts` — `injectThemeCSS` 函数
+
+**下次遇到**：主题色相关的问题 → 先确认是 inline style（`renderInlineMarkdown`）还是 CSS class（`renderMarkdownSync`）→ shared 页面没有 CSS 导入，只有 inline style 路径可用
+
+**记录时间**：2026-06-11
+
+---
+
+
 
 ---
 

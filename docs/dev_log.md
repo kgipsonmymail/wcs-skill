@@ -4,7 +4,8 @@
 
 ## 2026-06 功能实现摘要
 
-- 2026-06-10：mediary-dev SM18 回顾功能上线（后端 Go + 前端 React，5 个 Tab，间隔重复算法）
+- 2026-06-11：mediary-dev 公众号版 blockToWechatHtml 主题色一致性问题（1.5h）— default case 和 table cells 用 renderMarkdownSync 输出 .md-strong class，shared 页面无 CSS 导致加粗显示黑色；统一改用 renderInlineMarkdown，走 inline style 路径
+
 - 2026-06-10：mediary-dev 文档列表状态持久化（Zustand + localStorage，筛选条件/页码/滚动位置）
 - 2026-06-10：mediary skill 识别词优化（穷举大小写/拼写/中文/组合变体，解决 401 调用失败）
 - 2026-06-10：mediary skill 标准化调用规范（手动解析 .env，api_get/api_post 辅助函数）

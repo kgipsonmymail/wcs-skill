@@ -16,8 +16,10 @@ WCS-Skill
 │   └── 功能：遇到 bug 立刻记，>20 条触发归纳释放
 ├── Subagent 监督闭环
 │   └── 功能：delegate_task 时传递完整 context，返回后主 Agent 补救
-└── 三层 Docs 结构
-    └── 功能：用 project_index.yaml 做中枢，docs/ 做治理，git 做版本
+├── 三层 Docs 结构
+│   └── 功能：用 project_index.yaml 做中枢，docs/ 做治理，git 做版本
+└── md-renderer 渲染路径一致性
+    └── 功能：公众号版 blockToWechatHtml 统一走 inline style，避免 CSS class 在无 CSS 导入页面失效
 ```
 
 ---
