@@ -1,6 +1,41 @@
 功能: Subagent 监督闭环
 概述: delegate_task 时传递完整 context，返回后主 Agent 补救
 
-关键对象: []
+关键对象:
+  - 文件: wcs-cn/SKILL.md
+    作用: 部署版 SKILL.md，定义 subagent 协作规范
+    关键函数/类型:
+      - Subagent context 4块  # 项目入口/强制完成项/反思块/max_iterations
+      - 主 Agent 4步补救       # 检查commit/检查dev_log/检查二进制/反思记录
+  - 文件: docs/dev_log.md
+    作用: Subagent 完成后更新里程碑摘要
+    关键函数/类型:
+      - 里程碑格式          # 不堆放有效信息，只记录摘要
+  - 文件: docs/CODING_STANDARDS.md
+    作用: Subagent 必须遵守的编码规范
+    关键函数/类型:
+      - 错误留档规范         # 遇到错误立刻写 errorbook
 
-已知坑: []
+Subagent 强制完成项（必须传递给 subagent 的 context）:
+  1. git commit 所有变更（变更内容必须描述清楚）
+  2. 更新 docs/dev_log.md（新功能记录）
+  3. 确认无二进制文件被 git 跟踪
+  4. 输出 Session 反思块
+
+Subagent 反思块格式:
+  ## Subagent 反思
+  - git commit：是/否，若否则说明原因
+  - dev_log 更新：是/否，若否则说明原因
+  - 二进制清理：是/否，若否则说明原因
+  - 未完成任务：列出因迭代限制未完成的事项
+  - 改进建议：若有任何规则违反或流程问题
+
+已知坑:
+  - 调试时间: N/A
+    现象: Subagent 达到 max_iterations 直接退出，未执行 git commit/dev_log
+    根因: context 没有明确要求强制完成项，无退出前检查
+    涉及文件: [SKILL.md 旧版]
+  - 调试时间: N/A
+    现象: 二进制文件被误加入 git 跟踪
+    根因: Subagent 不清楚 git 规范
+    涉及文件: [Mediary 版本的 binary 文件]

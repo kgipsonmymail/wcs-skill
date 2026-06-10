@@ -81,11 +81,18 @@ features.d/
 └── 三层-docs-结构.yaml
 ```
 
-### 动态维护规则
+### 动态维护触发机制
 
-1. **新增功能** → 在 `features.d/` 创建 `{功能名}.yaml`，在 `features.md` 的功能网络和功能详情节添加入口
-2. **Bug 纠正时** → 在 errorbook 条目的"根因"和"解决"中提取涉及的文件和函数，追加到对应 `features.d/{功能}.yaml`
-3. **定期同步** → 每次释放 errorbook 后，更新对应的 `features.d/` 条目
+**触发条件（满足任一即维护）：**
+- 修复 bug 时 → errorbook 条目的"根因"+"解决"涉及的文件和函数 → 追加到对应 `features.d/{功能}.yaml` 的关键对象和已知坑
+- 新增功能时 → 在 `features.d/` 创建 `{功能名}.yaml`，在 `features.md` 的功能网络树和功能详情节添加入口
+- 释放 errorbook 时 → 分类归纳到 features.md → 同步更新 `features.d/` 对应条目的已知坑
+- 架构调整时 → 更新 features.md 的功能网络树 → 同步更新 `features.d/` 对应条目
+
+**维护优先级：**
+1. 已知坑（来自 errorbook）> 关键对象（来自 debug 过程）
+2. 不追求一次性填满，按需逐步积累
+3. features.d/ 的价值在于"下次遇到同类 bug 能快速定位"
 
 ### features.d/{功能}.yaml 格式
 
@@ -119,4 +126,24 @@ features.d/
 
 ## features.d/ 现有条目
 
-（暂无条目，动态维护开始后逐步填充）
+- ✅ state-loading.yaml — 关键对象: project_index.yaml / task_states.md / workflow.md / SKILL.md
+- ✅ errorbook.yaml — 关键对象: error_book.md / errorbook_release.md / SKILL.md；6个已知坑
+- ✅ subagent闭环.yaml — 关键对象: SKILL.md / dev_log.md / CODING_STANDARDS.md
+- ✅ 三层-docs-结构.yaml — 关键对象: wcs-cn/ / docs/ / references/
+
+---
+
+## features.d/ ↔ structure.d/ 联动机制
+
+features.d/ 和 structure.d/ 从不同视角描述同一套系统，互相引用形成网络：
+
+| features.d/ 条目 | → 关联 structure.d/ 条目 |
+|-----------------|------------------------|
+| state-loading | structure.d/wcs-cn.yaml（SKILL.md 是状态加载的执行体） |
+| errorbook | structure.d/docs.yaml（error_book.md 在 docs/ 下） |
+| subagent闭环 | structure.d/wcs-cn.yaml（SKILL.md 定义 subagent 协作规范） |
+| 三层-docs-结构 | structure.d/wcs-cn.yaml + structure.d/docs.yaml（两层都在 docs/ 下） |
+
+**联动规则：**
+- 当某个文件在 features.d/ 的关键对象里出现时，对应的 structure.d/ 条目也应包含该文件
+- Bug 调试时：先从 features.d/ 定位功能网络，再从 structure.d/ 定位文件路径，双向印证

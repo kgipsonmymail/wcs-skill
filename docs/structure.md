@@ -77,10 +77,15 @@ python3 scripts/scan_structure.py . -v
 # 冗余：scan 到但 structure.d/ 无记录 → 标记为"未归档文件"
 ```
 
-**验证时机**：
+**验证时机（满足任一即比对）：**
 - 每次维护时
-- scan_structure.py 结果与 structure.d/ 比对
-- 发现不一致时更新 structure.d/
+- scan_structure.py 有新的重要文件时
+- 架构调整涉及文件增删时
+
+**维护优先级：**
+1. 关键文件（来自 bug 调试）> 目录结构（来自架构分析）
+2. 不追求一次性填满，按需逐步积累
+3. structure.d/ 的价值在于"维护时能快速知道文件在哪"
 
 ---
 
@@ -132,4 +137,23 @@ scan_status:
 
 ## structure.d/ 现有条目
 
-（暂无条目，动态维护开始后逐步填充）
+- ✅ wcs-cn.yaml — 关键文件: SKILL.md / references/
+- ✅ docs.yaml — 关键文件: project_index.yaml / features.md / structure.md / error_book.md / features.d/ / structure.d/
+- ✅ references.yaml — 关键文件: api_reference.md / coding_standard_template.md 等
+- ✅ scripts.yaml — 关键文件: scan_skills.py / scan_structure.py（已含关键函数）
+- ✅ scan_verify.yaml — 上次 scan_structure.py 验证结果（2026-06-10）
+
+---
+
+## structure.d/ ↔ features.d/ 联动机制
+
+structure.d/ 和 features.d/ 从不同视角描述同一套系统，互相引用形成网络：
+
+| structure.d/ 条目 | → 关联 features.d/ 条目 |
+|-----------------|----------------------|
+| wcs-cn.yaml | features.d/state-loading（SKILL.md 是状态加载执行体）；features.d/subagent闭环（SKILL.md 定义协作规范）；features.d/三层-docs-结构 |
+| docs.yaml | features.d/errorbook（error_book.md 在 docs/ 下）；features.d/subagent闭环（dev_log.md 在 docs/ 下） |
+
+**联动规则：**
+- 当某个文件在 structure.d/ 的关键文件里出现时，对应的 features.d/ 条目也应包含该文件
+- Bug 调试时：先从 features.d/ 定位功能网络，再从 structure.d/ 定位文件路径，双向印证

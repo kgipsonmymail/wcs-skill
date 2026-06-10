@@ -1,6 +1,37 @@
 功能: 三层 Docs 结构
 概述: Git 版本用 wcs-cn/SKILL.md + docs/ + references/ 三层，部署版只有 wcs-cn/SKILL.md + references/
 
-关键对象: []
+关键对象:
+  - 路径: wcs-cn/
+    作用: 部署版 skill 根目录，AI 实际加载
+    关键文件:
+      - wcs-cn/SKILL.md        # 唯一开场必读
+      - wcs-cn/references/     # 模板和参考文档（部署版有）
+      - wcs-cn/scripts/         # 自动化脚本（部署版有）
+      - wcs-cn/assets/          # 资源文件
+  - 路径: docs/
+    作用: Git 版本治理文档，包含所有基线文档和 discussions
+    关键文件:
+      - docs/project_index.yaml  # YAML 中枢，连接所有层
+      - docs/features.md         # 功能网络提纲
+      - docs/structure.md        # 文件结构网络提纲
+      - docs/error_book.md       # 问题手册
+      - docs/dev_log.md         # 里程碑摘要
+      - docs/CODING_STANDARDS.md
+      - docs/workflow.md
+      - docs/features.d/         # features subordinate docs（新机制）
+      - docs/structure.d/       # structure subordinate docs（新机制）
+      - docs/discussions/       # 讨论存档
+  - 路径: references/
+    作用: Git 版本参考文档（只在 Git 版本存在）
+    关键文件:
+      - references/api_reference.md
+      - references/coding_standard_template.md
+      - references/core_docs_template.md
+      - references/workflow_checklists.md
 
-已知坑: []
+已知坑:
+  - 调试时间: N/A
+    现象: Git 版本和部署版结构混淆
+    根因: 不清楚三层 docs 结构部署差异
+    涉及文件: [SKILL.md 旧版]

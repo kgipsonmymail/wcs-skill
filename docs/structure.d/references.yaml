@@ -1,13 +1,22 @@
 模块: references
 路径: references/
-作用: 模板和参考文档，为项目提供标准模板
+作用: Git 版本参考文档（只在 Git 版本存在，部署版在 wcs-cn/references/）
 
-关键文件: []
+关键文件:
+  - path: references/api_reference.md
+    作用: API 参考文档模板
+  - path: references/coding_standard_template.md
+    作用: 编码规范模板，中文化
+  - path: references/core_docs_template.md
+    作用: 核心文档模板，中文化
+  - path: references/workflow_checklists.md
+    作用: 工作流检查清单模板，中文化
 
 依赖: []
-被依赖: []
+被依赖:
+  - docs/                     # docs/ 中的模板引用
 
 scan_status:
-  last_scan: null
+  last_scan: "2026-06-10"
   missing_files: []
   extra_files: []

@@ -17,10 +17,10 @@
 
 **问题**：rebase 冲突导致 `.env` 被重置为占位符，所有 API Key 丢失
 **调试时间**：1 小时
-**尝试过程**：检查环境变量、查看 git log、追踪 .gitignore
-**根因**：`.env` 被 git 跟踪但没有在冲突处理时被正确保留
-**解决**：.env 文件应该始终被 .gitignore 忽略，不进版本控制
-**下次遇到**：不要尝试从 git 恢复 .env，直接用 .env.example 重建
+**尝试过程**：检查环境变量、查看 git log、追踪 .gitignore、尝试 git stash 恢复
+**根因**：`.env` 从创建第一天起就被 `.gitignore` 保护，从未进入 git 追踪范围。`git stash` 只能保存**已追踪文件**的改动，对 untracked 文件无效。操作链：git add → git stash → git pull --rebase → .env 被覆盖 → git stash pop → 什么都没恢复 → 错误重建为占位符
+**解决**：.env 文件应该始终被 .gitignore 忽略，不进版本控制。本地备份才是唯一保护手段
+**下次遇到**：不要尝试从 git 恢复 .env，从可信来源（用户、密码管理器）重新写入。重要文件操作前先 `git status` 确认，不要基于假设行动
 **记录时间**：2026-06-10
 
 ### marked v18 renderer 白名单验证规则

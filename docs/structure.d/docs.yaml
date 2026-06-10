@@ -2,12 +2,85 @@
 路径: docs/
 作用: Git 版本治理文档，包含所有基线文档和 discussions
 
-关键文件: []
+关键文件:
+  - path: docs/project_index.yaml
+    作用: YAML 中枢，连接所有层，唯一开场必读
+    关键函数/类型:
+      - task_contexts          # 16种任务类型
+      - maintenance 字段     # 维护任务上下文
+  - path: docs/features.md
+    作用: 功能网络提纲，描述每个功能的业务逻辑
+    关键函数/类型:
+      - 功能网络树            # 4个功能节点
+      - features.d/ 章节     # 动态维护规则
+  - path: docs/structure.md
+    作用: 文件结构网络提纲，描述每个目录和关键文件
+    关键函数/类型:
+      - 顶层结构网络          # wcs-cn/docs/references/scripts
+      - structure.d/ 章节    # 动态维护规则 + scan_verify 联动
+  - path: docs/error_book.md
+    作用: 问题手册 Git 版本，6个已归档条目
+    关键函数/类型:
+      - 5字段格式             # 问题/调试时间/尝试过程/根因/解决/下次遇到
+      - 当前已知问题章节       # 无条目（已释放）
+      - 已归档条目章节         # 6个条目
+  - path: docs/errorbook_release.md
+    作用: 释放机制文档
+    关键函数/类型:
+      - 释放阈值: 20
+      - 释放流程: 阅读→分类归纳→更新→清空
+  - path: docs/dev_log.md
+    作用: 里程碑摘要，与 git log 互为补充
+    关键函数/类型:
+      - 里程碑格式            # 只记录摘要，不堆放有效信息
+  - path: docs/CODING_STANDARDS.md
+    作用: 编码规范，只有一条"错误留档"
+    关键函数/类型:
+      - 错误留档规范          # 遇到错误立刻写 errorbook
+  - path: docs/workflow.md
+    作用: 工作流规范，Bug 阶段 4 步标准排查流程
+    关键函数/类型:
+      - Bug 阶段              # 第一步定位文件/第二步定位代码/第三步跨模块关联/第四步精准修改
+  - path: docs/dev_plan.md
+    作用: 开发计划，done/next/todo/watch 四象限
+  - path: docs/project_status.md
+    作用: 项目状态总览
+  - path: docs/task_states.md
+    作用: 15种状态触发规则
+  - path: docs/uin.md
+    作用: 用户输入缓存，失败时记录用户输入
+    关键函数/类型:
+      - 释放机制: 30条触发
 
-依赖: []
+  # Subordinate docs 目录
+  - path: docs/features.d/
+    作用: features 的 subordinate docs，新机制
+    关键文件:
+      - _index.yaml
+      - state-loading.yaml     # 关键对象: project_index.yaml, task_states.md, workflow.md
+      - errorbook.yaml        # 关键对象: error_book.md, errorbook_release.md; 6个已知坑
+      - subagent闭环.yaml     # 关键对象: SKILL.md, dev_log.md, CODING_STANDARDS.md
+      - 三层-docs-结构.yaml   # 关键对象: wcs-cn/, docs/, references/
+  - path: docs/structure.d/
+    作用: structure 的 subordinate docs，新机制
+    关键文件:
+      - _index.yaml
+      - wcs-cn.yaml            # 关键文件: SKILL.md, references/
+      - docs.yaml              # 本文件
+      - references.yaml        # Git版本 only
+      - scripts.yaml           # 关键文件: scan_skills.py, scan_structure.py
+      - scan_verify.yaml      # 上次 scan 结果验证
+
+  # Discussions 存档
+  - path: docs/discussions/
+    作用: 讨论存档，按日期归档
+
+依赖:
+  - wcs-cn/SKILL.md            # docs/ 由 SKILL.md 引用
+  - references/               # 模板来源
 被依赖: []
 
 scan_status:
-  last_scan: null
+  last_scan: "2026-06-10"
   missing_files: []
   extra_files: []

@@ -1,6 +1,43 @@
 功能: Errorbook 积累与释放
 概述: 遇到 bug 立刻记，>20 条触发归纳释放
 
-关键对象: []
+关键对象:
+  - 文件: docs/error_book.md
+    作用: 问题手册 Git 版本，标准 5 字段格式
+    关键函数/类型:
+      - 5字段格式           # 问题/调试时间/尝试过程/根因/解决/下次遇到
+  - 文件: docs/errorbook_release.md
+    作用: 释放机制文档，阈值 20，分类归纳到 features.md/CODING_STANDARDS.md
+    关键函数/类型:
+      - 释放阈值: 20        # 条目 > 20 触发释放
+      - 释放流程            # 阅读→分类归纳→更新→清空
+  - 文件: wcs-cn/SKILL.md
+    作用: 部署版 SKILL.md，SKILL.md:288 定义了释放检查触发条件
+    关键函数/类型:
+      - 释放检查逻辑        # bug_fix/维护阶段时检查条目数量
 
-已知坑: []
+已知坑:
+  - 调试时间: N/A（机制缺失）
+    现象: 遇到 bug 不记录，经验散落各处（dev_log/Pitfalls），无法复用
+    根因: 只有释放流程，没有积累流程
+    涉及文件: [旧版 docs/dev_log.md（垃圾堆）]
+  - 调试时间: 0.5h
+    现象: "renderer 'alert' does not exist" / "renderer 'footnote_def' does not exist"
+    根因: marked v18 有 KNOWN_TOKENS 白名单，自定义 renderer 未注册
+    涉及文件: [marked v18 renderer 文件]
+  - 调试时间: 1h
+    现象: CSS var(--color, #333) 始终显示 #333
+    根因: CSS var() fallback 在变量未定义时不生效，fallback 是默认值不是你写的值
+    涉及文件: [injectThemeCSS 相关文件]
+  - 调试时间: 0.5h
+    现象: 删了功能代码但文件残留，TypeScript 构建失败
+    根因: 删引用但忘记删文件本身
+    涉及文件: [残留的 .ts 文件]
+  - 调试时间: 0.5h
+    现象: @ts-expect-error 加在错误行，构建仍失败
+    根因: 注释必须精准加在真正报错的行，不是相关行
+    涉及文件: [TypeScript 文件]
+  - 调试时间: 0.1h
+    现象: console.log 调试残留，提交后面试审失败
+    根因: 临时调试代码没有清理机制
+    涉及文件: [index.ts 等]
