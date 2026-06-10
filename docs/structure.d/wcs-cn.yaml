@@ -1,0 +1,13 @@
+模块: wcs-cn
+路径: wcs-cn/
+作用: 部署版 skill，AI 实际加载的 SKILL.md
+
+关键文件: []
+
+依赖: []
+被依赖: []
+
+scan_status:
+  last_scan: null
+  missing_files: []
+  extra_files: []

@@ -1,0 +1,24 @@
+模块: scripts
+路径: scripts/
+作用: 自动化脚本，scan_skills.py 和 scan_structure.py
+
+关键文件:
+  - path: scripts/scan_skills.py
+    作用: 扫描本地 skills 目录，生成 skills_index.yaml
+    关键函数/类型:
+      - scan_skills()     # 主扫描函数
+      - generate_yaml()   # 生成 YAML 输出
+  - path: scripts/scan_structure.py
+    作用: 扫描项目结构，生成 SQLite 结构索引
+    关键函数/类型:
+      - scan_directory()  # 扫描目录树
+      - ensure_tables()   # 创建数据库表
+      - guess_module()    # 根据路径猜测模块名
+
+依赖: []
+被依赖: []
+
+scan_status:
+  last_scan: null
+  missing_files: []
+  extra_files: []

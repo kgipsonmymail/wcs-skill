@@ -1,0 +1,19 @@
+# features.d 索引（自动生成）
+# 由 features.md 维护，不要手动编辑此文件
+
+features:
+  - name: 状态展开式加载
+    file: state-loading.yaml
+    updated: null
+
+  - name: Errorbook 积累与释放
+    file: errorbook.yaml
+    updated: null
+
+  - name: Subagent 监督闭环
+    file: subagent闭环.yaml
+    updated: null
+
+  - name: 三层 Docs 结构
+    file: 三层-docs-结构.yaml
+    updated: null

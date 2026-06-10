@@ -1,0 +1,13 @@
+模块: references
+路径: references/
+作用: 模板和参考文档，为项目提供标准模板
+
+关键文件: []
+
+依赖: []
+被依赖: []
+
+scan_status:
+  last_scan: null
+  missing_files: []
+  extra_files: []

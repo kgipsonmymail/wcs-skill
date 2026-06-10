@@ -1,0 +1,6 @@
+功能: Subagent 监督闭环
+概述: delegate_task 时传递完整 context，返回后主 Agent 补救
+
+关键对象: []
+
+已知坑: []

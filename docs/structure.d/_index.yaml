@@ -1,0 +1,19 @@
+# structure.d 索引（自动生成）
+# 由 structure.md 维护，不要手动编辑此文件
+
+modules:
+  - name: wcs-cn
+    file: wcs-cn.yaml
+    updated: null
+
+  - name: docs
+    file: docs.yaml
+    updated: null
+
+  - name: references
+    file: references.yaml
+    updated: null
+
+  - name: scripts
+    file: scripts.yaml
+    updated: null

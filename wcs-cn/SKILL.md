@@ -285,7 +285,7 @@ project_index.yaml → CODING_STANDARDS.md → 待审查代码
 在 Bug 阶段或维护阶段，读取 errorbook 后检查：
 
 **若满足任一条件，在 Session 反思块里输出释放建议**：
-- 条目数量 > 15 → 建议释放
+- 条目数量 > 20 → 建议释放
 - 时间 > 1 个月未释放 → 建议释放
 - 用户说"清理 errorbook" → 触发完整释放流程
 

@@ -1,62 +1,135 @@
 # 仓库结构
 
-## 版本说明
+> 本文件是文件结构网络的**提纲**，描述每个目录和关键文件的作用。
+> 详细级别（函数/类型/依赖关系）在 `structure.d/` 子目录中按需维护。
+> 动态维护规则：errorbook 纠正 bug 时，将排查到的文件和函数同步到对应的 subordinate doc。
+> `structure.d/` 与 `scan_structure.py` 联动验证，防止结构老化过时。
 
-本仓库是 **Git 版本**（wcs-skill），用于 WCS 自身的开发和迭代。
+---
 
-**部署版本**是 `wcs-cn/SKILL.md`，是 AI 实际执行任务时加载的 skill。部署版应仅包含 `SKILL.md`、`references/` 和执行所需的最小 docs 集合，不包含本 git 版本中的讨论/规划/实验类文档。
-
-## 顶层目录
+## 顶层结构网络
 
 ```
 wcs-skill/
-├── wcs-cn/               # 中文技能主目录（当前维护版）
-├── docs/                 # 仓库自身文档
-│   ├── project_index.yaml    # YAML 中枢索引（Module 1）
-│   ├── task_states.md        # 任务状态触发机制（Module 2）
-│   ├── skills_index.yaml     # 本地 skill 索引（Module 3，自动生成）
-│   ├── skills_index.md       # skill 索引说明
-│   ├── doc_sync_checklist.md # Doc 同步检查清单（Module 4）
-│   ├── structure_index_experiment.md  # SQLite vs YAML 实验记录（Module 5）
-│   ├── errorbook_release.md  # Errorbook 释放机制（Module 6）
-│   ├── docs_architecture_review.md   # Docs 架构扩展评估（Module 7）
-│   ├── discussions/           # 重构讨论存档
-│   ├── project_status.md
-│   ├── structure.md
-│   ├── dev_plan.md
-│   ├── dev_log.md
-│   ├── features.md
-│   ├── error_book.md
-│   ├── CODING_STANDARDS.md
-│   ├── workflow.md
-│   └── uin.md
-├── references/           # WCS 模板
-│   ├── core_docs_template.md
-│   ├── workflow_checklists.md
-│   ├── coding_standard_template.md
-│   └── project_index_template.yaml  # 中枢文档模板
-├── scripts/              # 自动化脚本（Module 3 & 5）
-│   ├── scan_skills.py       # 扫描本地 skills 生成索引
-│   └── scan_structure.py     # 扫描项目结构生成 SQLite
-├── SKILL.md              # 主技能定义（根目录，name: wcs）
-├── README.md             # 仓库入口
-└── LICENSE              # MIT 许可证
+├── wcs-cn/              # 部署版 skill（AI 实际加载）
+├── docs/                # Git 版本治理文档
+├── references/          # 模板和参考
+├── scripts/             # 自动化脚本
+└── .git/                # Git 版本控制
 ```
 
-## 参考文件
+---
 
-- `references/core_docs_template.md`：基线文档模板
-- `references/coding_standard_template.md`：通用代码规范模板
-- `references/workflow_checklists.md`：端到端流程清单
-- `references/project_index_template.yaml`：中枢文档模板
+## 目录详情
 
-## 维护导航
+### wcs-cn/
 
-| 维护目标 | 维护文件 |
-|---------|---------|
-| 修改 WCS 行为 | `wcs-cn/SKILL.md` |
-| 修改中枢索引结构 | `docs/project_index.yaml` |
-| 更新 Module 定义 | `docs/dev_plan.md` |
-| 记录维护动作 | `docs/dev_log.md` |
-| 重建 skill 索引 | `python3 scripts/scan_skills.py` |
-| 重建结构索引 | `python3 scripts/scan_structure.py .` |
+**作用**：部署版 skill。AI 执行任务时加载 `wcs-cn/SKILL.md`，不加载 Git 版本的 docs。
+
+**Subordinate doc**：`structure.d/wcs-cn.yaml`
+
+---
+
+### docs/
+
+**作用**：Git 版本治理文档。包括 project_index.yaml（中枢）、CODING_STANDARDS、workflow、features、structure 等所有基线文档。
+
+**Subordinate doc**：`structure.d/docs.yaml`
+
+---
+
+### references/
+
+**作用**：模板和参考文档。为项目提供标准模板（core_docs_template.md 等）。
+
+**Subordinate doc**：`structure.d/references.yaml`
+
+---
+
+### scripts/
+
+**作用**：自动化脚本。`scan_skills.py` 扫描本地 skills，`scan_structure.py` 扫描文件结构。
+
+**Subordinate doc**：`structure.d/scripts.yaml`
+
+---
+
+## 顶层文件
+
+| 文件 | 作用 |
+|------|------|
+| `SKILL.md` | WCS 主技能定义（根目录，name: wcs） |
+| `README.md` | 仓库入口说明 |
+| `LICENSE` | MIT 许可证 |
+
+---
+
+## 结构网络网络验证
+
+使用 `scripts/scan_structure.py` 验证文档与实际结构的一致性：
+
+```bash
+# 扫描结构
+python3 scripts/scan_structure.py . -v
+
+# 验证 structure.d/ 与实际文件的一致性
+# 缺失：structure.d/ 有记录但文件不存在 → 标记为"孤立条目"
+# 冗余：scan 到但 structure.d/ 无记录 → 标记为"未归档文件"
+```
+
+**验证时机**：
+- 每次维护时
+- scan_structure.py 结果与 structure.d/ 比对
+- 发现不一致时更新 structure.d/
+
+---
+
+## Subordinate Docs 管理规则
+
+### structure.d/ 目录结构
+
+```
+structure.d/
+├── _index.yaml       # 结构索引（自动生成）
+├── wcs-cn.yaml
+├── docs.yaml
+├── references.yaml
+├── scripts.yaml
+└── scan_verify.yaml   # 上次 scan_structure.py 验证结果
+```
+
+### structure.d/{模块}.yaml 格式
+
+```yaml
+模块: 模块名称
+路径: docs/xxx
+作用: 一句话描述
+
+# 关键文件（动态维护，Bug 调试时补充）
+关键文件:
+  - path: src/pages/XXX.tsx
+    作用: 做什么
+    关键函数/类型:
+      - ComponentName
+      - useStoreName
+  - path: backend/handler/xxx.go
+    作用: 做什么
+    关键函数/类型:
+      - HandlerFunc
+
+# 依赖关系（动态维护）
+依赖: []
+被依赖: []
+
+# scan_structure.py 验证状态
+scan_status:
+  last_scan: null
+  missing_files: []
+  extra_files: []
+```
+
+---
+
+## structure.d/ 现有条目
+
+（暂无条目，动态维护开始后逐步填充）

@@ -1,0 +1,6 @@
+功能: 三层 Docs 结构
+概述: Git 版本用 wcs-cn/SKILL.md + docs/ + references/ 三层，部署版只有 wcs-cn/SKILL.md + references/
+
+关键对象: []
+
+已知坑: []

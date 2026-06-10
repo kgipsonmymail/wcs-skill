@@ -1,0 +1,13 @@
+模块: docs
+路径: docs/
+作用: Git 版本治理文档，包含所有基线文档和 discussions
+
+关键文件: []
+
+依赖: []
+被依赖: []
+
+scan_status:
+  last_scan: null
+  missing_files: []
+  extra_files: []
