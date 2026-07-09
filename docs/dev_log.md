@@ -9,6 +9,12 @@
   - 同步去掉 wrapWechatArticle 里的 max-width/margin/padding 约束
   - 阅读版和公众号版统一响应式 padding：手机 px-4，桌面 sm:px-8
 
+- 2026-07-09：mediary-dev DocumentEdit.tsx 手机端 Header 优化
+  - Bug 修复：新窗口打开按钮图标 Trash2 → ExternalLink（之前有两个 Trash2 并排）
+  - 新增手机端更多菜单（⋯ MoreVertical），收纳：侧边栏/新窗口打开/置顶/分享/版本历史/删除
+  - 桌面端行为不变，保持所有按钮直接显示
+  - 删除操作增加 confirm 确认防误删
+
 ## 2026-06 功能实现摘要
 
 - 2026-06-11：mediary-dev 公众号版 blockToWechatHtml 主题色一致性问题（1.5h）— default case 和 table cells 用 renderMarkdownSync 输出 .md-strong class，shared 页面无 CSS 导致加粗显示黑色；统一改用 renderInlineMarkdown，走 inline style 路径
