@@ -2,6 +2,13 @@
 
 > 里程碑摘要，与 git log 互为补充。**不作为有效信息源。**
 
+## 2026-07 功能实现摘要
+
+- 2026-07-09：mediary-dev 分享页公众号预览响应式适配（手机端页边距收紧，桌面端保持正常）
+  - 移除两层多余的 wrapper div（原来 max-width:580px × 2 层导致手机版太窄）
+  - 同步去掉 wrapWechatArticle 里的 max-width/margin/padding 约束
+  - 阅读版和公众号版统一响应式 padding：手机 px-4，桌面 sm:px-8
+
 ## 2026-06 功能实现摘要
 
 - 2026-06-11：mediary-dev 公众号版 blockToWechatHtml 主题色一致性问题（1.5h）— default case 和 table cells 用 renderMarkdownSync 输出 .md-strong class，shared 页面无 CSS 导致加粗显示黑色；统一改用 renderInlineMarkdown，走 inline style 路径
