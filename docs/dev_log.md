@@ -4,6 +4,13 @@
 
 ## 2026-07 功能实现摘要
 
+- 2026-07-10：riji backend + mediary-dev 双环境接入 PostgreSQL（PG 8.153.76.184）
+  - riji backend：model/document.go `CreatedAt` 从 `*time.Time` 改为 `time.Time`（GORM autoCreateTime 行为修复），handler/tomato.go 支持 PG `to_char`，main.go 双 driver 切换（`USE_PG8=true` 时连 PG）
+  - mediary-dev backend：同样修复 `CreatedAt` 类型，`usePG8` 字段传入各 handler
+  - 两套环境 .env 均添加 PG8Config（HOST/PORT/USER/PASSWORD/DATABASE）
+  - riji.7ygv.com 和 dev.7ygv.com 均已切换至 PG，MySQL 完全弃用
+  - 数据同步：MySQL ↔ PG 双向打通（各 1996 篇文档，blocks 完整同步）
+
 - 2026-07-10：mediary-dev 图标按钮样式统一（IconButton 组件）
   - 新建 `IconButton` 组件，两种 variant：`icon`（纯图标 rounded-full p-1.5）和 `action`（图标+文字 rounded-lg px-3 py-2）
   - 迁移 DocumentShare、DocumentDisplay Pin、DocumentSidePanel Pin、DocumentListItem Edit2 到 IconButton
