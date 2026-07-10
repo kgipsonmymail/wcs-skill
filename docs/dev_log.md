@@ -4,6 +4,11 @@
 
 ## 2026-07 功能实现摘要
 
+- 2026-07-10：mediary-dev 图标按钮样式统一（IconButton 组件）
+  - 新建 `IconButton` 组件，两种 variant：`icon`（纯图标 rounded-full p-1.5）和 `action`（图标+文字 rounded-lg px-3 py-2）
+  - 迁移 DocumentShare、DocumentDisplay Pin、DocumentSidePanel Pin、DocumentListItem Edit2 到 IconButton
+  - 解决手机端菜单里分享按钮文字掉到图标下方的问题
+
 - 2026-07-09：mediary-dev 分享页公众号预览响应式适配（手机端页边距收紧，桌面端保持正常）
   - 移除两层多余的 wrapper div（原来 max-width:580px × 2 层导致手机版太窄）
   - 同步去掉 wrapWechatArticle 里的 max-width/margin/padding 约束

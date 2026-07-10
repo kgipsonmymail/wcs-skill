@@ -17,6 +17,10 @@ project:
 maintenance:
   current_focus: "WCS 自身维护：features.d/ 和 structure.d/ 填充完成，errorbook 积累机制建立（2026-06-10）"
   recent_changes:
+    - date: "2026-07-10"
+      change: "mediary-dev: 新建 IconButton 组件统一图标按钮样式，迁移 DocumentShare/Pin/Edit2 按钮"
+    - date: "2026-07-09"
+      change: "mediary-dev 分享页公众号预览响应式适配（手机端页边距收紧，桌面端保持正常）"
     - date: "2026-06-10"
       change: "WCS: features.d/ 和 structure.d/ 全面填充，关键对象和关联映射完整"
     - date: "2026-06-10"
